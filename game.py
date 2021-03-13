@@ -36,6 +36,8 @@ class Namu(pygame.sprite.Sprite):
         self.rect.topleft = [pos_x,pos_y]
 
 
+# class test
+
 # Namu class test
 
 moving_sprite = pygame.sprite.Group()
