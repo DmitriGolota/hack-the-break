@@ -14,7 +14,7 @@ import pygame
 import sys
 import random
 from pygame_functions import *
-
+import time
 
 pygame.init()
 pygame.mixer.init()
@@ -167,6 +167,7 @@ game_running = True
 
 while game_running:
     pygame.time.delay(100)
+
     for event in pygame.event.get():      # catch all the events that are happening right now
         if event.type == pygame.QUIT: # Quitting the game
             pygame.quit()
@@ -195,7 +196,7 @@ while game_running:
     # game over
     else:
         score_display('game_over')
-
+        time.sleep(5)
     pygame.display.update()
     clock.tick(120)
 
