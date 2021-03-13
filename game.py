@@ -35,6 +35,15 @@ class Namu(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x,pos_y]
 
+    def update(self):
+        self.current_sprite += 1
+
+        if self.current_sprite >= len(self.sprites):
+            self.current_sprite = 0
+
+        self.image = self.sprites[self.current_sprite]
+
+
 
 # class test
 
@@ -93,23 +102,6 @@ def generate_random_question():
     return question_for_this_turn, questions_to_be_asked[question_for_this_turn]
 
 
-def movement():
-    nextFrame = clock()
-    frame = 0
-    while True:
-        if clock() > nextFrame:
-            frame = (frame + 1) % 12
-            nextFrame += 120
-        if keyPressed("right"):
-            changeSpriteImage(testSprite, 0*12 + frame)
-        elif keyPressed("down"):
-            changeSpriteImage(testSprite, 1*12 + frame)
-        elif keyPressed("left"):
-            changeSpriteImage(testSprite, 2*12 + frame)
-        elif keyPressed("right"):
-            changeSpriteImage(testSprite, 3*12 + frame)
-
-
 def score_display(game_state):
     if game_state == 'main_game':
         score_surface = game_font.render(str(score), True, (255, 255, 255))
@@ -143,7 +135,9 @@ while game_running:
             sys.exit()
         if event.type == pygame.KEYDOWN: # Move Namu with space bar
             if event.key == pygame.K_SPACE and game_active:
-                movement()
+                # specific command instead of movement()
+                pass
+
 
     # Background image
     screen.blit(sand, (0, 0))
@@ -151,6 +145,7 @@ while game_running:
     if game_active:
         # image of player
         moving_sprite.draw(screen)
+        moving_sprite.update()
 
         # Game Functions
         score_display('main_game')
