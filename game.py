@@ -17,6 +17,7 @@ from pygame_functions import *
 from pygame.locals import *
 import time
 
+
 from pygame.locals import (
     K_UP,
     K_DOWN,
@@ -83,6 +84,7 @@ class Namu(pygame.sprite.Sprite):
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
 
+
 class NamuMamu(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__()
@@ -123,6 +125,7 @@ class NamuMamu(pygame.sprite.Sprite):
                 self.current_sprite = 0
 
             self.image = self.sprites[self.current_sprite]
+
 
 class menu():
     def __init__(self):
