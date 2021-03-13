@@ -35,12 +35,14 @@ class Namu(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x,pos_y]
 
-#class test
+
+# Namu class test
 
 moving_sprite = pygame.sprite.Group()
 player = Namu(100,100)
 moving_sprite.add(player)
 
+ # Namu class test
 
 
 
