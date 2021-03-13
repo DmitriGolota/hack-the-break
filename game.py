@@ -51,8 +51,6 @@ class Namu(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
 
-    def animate(self):
-        self.is_animating = True
 
     def update(self):
         if self.is_animating:
@@ -60,7 +58,7 @@ class Namu(pygame.sprite.Sprite):
 
             if self.current_sprite >= len(self.sprites):
                 self.current_sprite = 0
-                self.is_animating = False
+
 
             self.image = self.sprites[self.current_sprite]
 
@@ -164,7 +162,7 @@ while game_running:
             sys.exit()
         if event.type == pygame.KEYDOWN: # Move Namu with space bar
             if event.type == pygame.K_SPACE:
-                Namu.animate()
+                pass
 
 
     # Background image
