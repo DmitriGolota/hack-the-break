@@ -129,11 +129,8 @@ while game_running:
             sys.exit()
         if event.type == pygame.KEYDOWN: # Move Namu with space bar
             if event.key == pygame.K_SPACE and game_active:
-                movement()
-
-        # On button trigger
-        if event.type == pygame.KEYDOWN:
-            pass
+                # specific command instead of movement()
+                pass
 
 
     # Background image
