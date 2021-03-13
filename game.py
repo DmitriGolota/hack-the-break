@@ -28,13 +28,15 @@ class Namu(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__()
         self.sprites = []
-        self.sprites.append(pygame.image.load("./assets/Namu1.gif"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f1.png"))
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x,pos_y]
 
+
+# class test
 
 # Namu class test
 
@@ -61,27 +63,27 @@ def generate_random_question():
     questions_to_be_asked = {
         "How many different species of fish exist in the Ocean?":
             [["15_000", "32_000", "40_000", "23_000"],
-            1,
-            "32 000! This is greater than the total of all other \
+             1,
+             "32 000! This is greater than the total of all other \
             vertebrate species (amphibians, reptiles, birds, and mammals) combined."],
         "The Ocean contributes to: ":
             [["Producing Oxygen and storing Carbon Dioxide",
-                "Regulating weather and climate",
-                "Nutrient-rich food chains",
-                "All the above"],
-            3,
-            "All the above. The Ocean is thus essential to life on Earth from producing \
+              "Regulating weather and climate",
+              "Nutrient-rich food chains",
+              "All the above"],
+             3,
+             "All the above. The Ocean is thus essential to life on Earth from producing \
             50-80% of the Oxygen we breath, regulating the seasons, and sustaining food \
             chains on and off land."],
         "How much of the Ocean have humans been able to map, explore, and observe?":
             [["20%", "35%", "55%", "we've mapped all of it!"],
-            0,
-            "Roughly 20%. The Ocean covers 70% of our planet's surface, 80% of it still \
-            remainds unobserved, undiscovered, and unmapped."],
+             0,
+             "Roughly 20%. The Ocean covers 70% of our planet's surface, 80% of it still \
+            remains unobserved, undiscovered, and unmapped."],
         "How many species live in the Ocean?":
             [["78 300", "360 000", "620 000", "I'm not really sure"],
-            3,
-            "Trick question! Scientists have no way of tracking how many species there \
+             3,
+             "Trick question! Scientists have no way of tracking how many species there \
             are in the ocean since the majority of it has yet to be observed. They \
             estimate that there are roughly 91% of species remain undiscovered in \
             the ecosystem; there can be millions of species!"
