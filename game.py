@@ -22,8 +22,22 @@ WINDOW_SIZE = (500, 500)
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
 
+# Game Classes
+
+class Namu(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__()
+        self.sprites = []
+        self.sprites.append(pygame.image.load("./assets/Namu1.gif"))
+        self.current_sprite = 0
+        self.image = self.sprites
+
+
+
+
+
 # Game Variables
-testSprite = newSprite("./assets/Namu1.gif", 12) # 12 is the gif frame
+
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 7)
 score = 0
 high_score = 100
@@ -31,6 +45,8 @@ high_score = 100
 # Floor_Sand
 sand = pygame.image.load('./assets/sand.png').convert()
 sand = pygame.transform.scale(sand, (512, 512))
+
+
 
 
 # Game Functions
@@ -79,3 +95,5 @@ while game_running:
 
     pygame.display.update()
     clock.tick(120)
+
+pygame.quit()
