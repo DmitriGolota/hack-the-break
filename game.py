@@ -23,8 +23,12 @@ screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
 
 # Game Variables
-bg = pygame.image.load('/assets/background.jpg')
 testSprite = newSprite("./assets/Namu1.gif", 12) # 12 is the gif frame
+
+
+sand = pygame.image.load('./assets/sand.png').convert()
+sand = pygame.transform.scale(sand, (512, 512))
+
 
 # Game Functions
 def movement():
@@ -60,9 +64,9 @@ while game_running:
 
     if game_active:
         pass
-        # Game Functions
-        # image of player
-        # background image
+
+    screen.blit(sand, (0, 0))
+
 
     pygame.display.update()
     clock.tick(120)
