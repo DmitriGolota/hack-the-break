@@ -22,7 +22,7 @@ screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
 
 bg = pygame.image.load('/assets/background.jpg')
-testSprite = newSprite(./assets/Namu.gif, 12) # 12 is the gif frame
+testSprite = newSprite("./assets/Namu1.gif", 12) # 12 is the gif frame
 
 
 running = True
@@ -50,4 +50,10 @@ def movement():
             frame = (frame + 1) % 12
             nextFrame += 120
         if keyPressed("right"):
-            changeSpriteImage(testSprite, 0*8)
+            changeSpriteImage(testSprite, 0*12 + frame)
+        elif keyPressed("down"):
+            changeSpriteImage(testSprite, 1*12 + frame)
+        elif keyPressed("left"):
+            changeSpriteImage(testSprite, 2*12 + frame)
+        elif keyPressed("right"):
+            changeSpriteImage(testSprite, 3*12 + frame)
