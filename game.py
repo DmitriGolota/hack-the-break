@@ -124,9 +124,12 @@ game_running = True
 while game_running:
     pygame.time.delay(100)
     for event in pygame.event.get():      # catch all the events that are happening right now
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT: # Quitting the game
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN: # Move Namu with space bar
+            if event.key == pygame.K_SPACE and game_active:
+                movement()
 
         # On button trigger
         if event.type == pygame.KEYDOWN:
