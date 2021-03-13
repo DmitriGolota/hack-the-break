@@ -109,6 +109,7 @@ sand_x_position = 0
 # Background_Image
 bg_1 = pygame.image.load('./assets/bg-1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+bg_x_position = 0
 
 # Obstacles
 obstacle_1 = pygame.image.load('./assets/iceberg.png')
@@ -181,6 +182,16 @@ def move_sand(floor_position):
         return floor_position
 
 
+def move_bg(bg_position):
+    bg_position -= 2
+    screen.blit(bg_1, (bg_position, 0))
+    screen.blit(bg_1, (bg_position + 500, 0))
+    if bg_position <= - 500:
+        return 0
+    else:
+        return bg_position
+
+
 # Main Loop
 game_active = True
 game_running = True
@@ -202,7 +213,7 @@ while game_running:
 
 
     # Background image
-    screen.blit(bg_1, (0, 0))
+    bg_x_position = move_bg(bg_x_position)
     sand_x_position = move_sand(sand_x_position)
     screen.blit(obstacle_1, (0, 0))
 
