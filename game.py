@@ -78,6 +78,10 @@ class Namu(pygame.sprite.Sprite):
             self.rect.move_ip(0, -5)
         if pressed_keys[K_DOWN]:
             self.rect.move_ip(0, 5)
+        if pressed_keys[K_LEFT]:
+            self.rect.move_ip(-5, 0)
+        if pressed_keys[K_RIGHT]:
+            self.rect.move_ip(5, 0)
 
 class NamuMamu(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
