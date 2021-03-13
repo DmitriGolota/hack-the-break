@@ -68,5 +68,7 @@ while game_running:
         # image of player
         # background image
 
+    screen.blit(sand, (0, 0))
+
     pygame.display.update()
     clock.tick(120)
