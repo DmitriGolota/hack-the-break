@@ -30,8 +30,16 @@ class Namu(pygame.sprite.Sprite):
         self.sprites = []
         self.sprites.append(pygame.image.load("./assets/Namu1.gif"))
         self.current_sprite = 0
-        self.image = self.sprites
+        self.image = self.sprites[self.current_sprite]
 
+        self.rect = self.image.get_rect()
+        self.rect.topleft = [pos_x,pos_y]
+
+#class test
+
+moving_sprite = pygame.sprite.Group()
+player = Namu(100,100)
+moving_sprite.add(player)
 
 
 
@@ -92,7 +100,7 @@ while game_running:
         # image of player
         # background image
         score_display()
-
+        moving_sprite.draw(screen)
 
 
     pygame.display.update()
