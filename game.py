@@ -289,4 +289,5 @@ while game_running:
     pygame.display.update()
     clock.tick(120)
 
+
 pygame.quit()
