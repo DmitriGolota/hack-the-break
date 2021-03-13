@@ -14,6 +14,7 @@ import pygame
 import sys
 import random
 from pygame_functions import *
+from pygame.locals import *
 import time
 
 from pygame.locals import (
@@ -31,6 +32,7 @@ pygame.mixer.init()
 pygame.display.set_caption("Namu")
 
 WINDOW_SIZE = (500, 500)
+display = pygame.Surface((500, 500))
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
 #pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
@@ -118,16 +120,36 @@ class NamuMamu(pygame.sprite.Sprite):
 
             self.image = self.sprites[self.current_sprite]
 
-class button():
+class menu():
+    def __init__(self):
+        self.mid_w, self.mid_h = 250, 250
+        self.run_display = True
+        self.cursor_rect = pygame.Rect(0, 0, 20, 20)
+        self.offset = -100
 
-    # colours for button and text
-    button_col = (39, 60, 117)
-    hover_col = ()
-    click_col = ()
-    text_col = (255, 255, 255)
-    width = 100
-    height = 70
+    def draw_cursor(self):
+        font = pygame.font.Font(',/assets/Fipps_font.otf', 50)
+        text_surface = font.render('*', True, (255, 255, 255))
+        text_rect = text_surface.get_rect()
+        text_rect.center = (self.cursor_rect.x, self.cursor_rect.y)
+        screen.blit(text_surface, text_rect)
 
+    def blit_screen(self):
+        screen.blit(display, (0, 0))
+        pygame.display.update()
+        UP_KEY, DOWN_KEY, START_KEY, BACK_KEY = False, False, False, False
+
+
+class main_menu(menu):
+    def __init__(self):
+        menu.__init__(self)
+        self.state = 'Start'
+        self.startx, self.starty = self.mid_w, self.mid_h + 30
+        self.quitx, self.quity = self.mid_w, self.mid_h + 50
+        self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
+
+    def display_menu(self):
+        self.run_display = True
 
 
 # class test
@@ -140,7 +162,7 @@ moving_sprite.add(player)
 
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
- # Namu class test
+# Namu class test
 
 
 
@@ -148,6 +170,8 @@ moving_sprite.add(final_check)
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
 high_score = 0
+
+
 
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
@@ -266,18 +290,15 @@ while game_running:
     player.update()
 
 
-    # Background image
+    # Background
     bg_x_position = move_bg(bg_x_position)
     sand_x_position = move_sand(sand_x_position)
     screen.blit(obstacle_1, (0, 0))
 
-
     if game_active:
         # image of player
-
         moving_sprite.draw(screen)
         moving_sprite.update()
-
 
         # Game Functions
         score_display('main_game')
@@ -286,6 +307,7 @@ while game_running:
     else:
         score_display('game_over')
         time.sleep(5)
+
     pygame.display.update()
     clock.tick(120)
 
