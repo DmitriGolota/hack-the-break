@@ -7,7 +7,11 @@ Member List
 
 Mar 13, 2021
 """
+
 import pygame
+import sys
+import random
+from pygame_functions import *
 
 
 pygame.init()
