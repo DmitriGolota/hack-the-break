@@ -189,6 +189,10 @@ while game_running:
     pygame.time.delay(100)
 
     for event in pygame.event.get():      # catch all the events that are happening right now
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                game_running = False
+
         if event.type == pygame.QUIT: # Quitting the game
             pygame.quit()
             sys.exit()
