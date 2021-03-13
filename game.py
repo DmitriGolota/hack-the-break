@@ -14,32 +14,14 @@ import random
 from pygame_functions import *
 
 
-
 pygame.init()
 
 WINDOW_SIZE = (500, 500)
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
 
-bg = pygame.image.load('/assets/background.jpg')
-testSprite = newSprite("./assets/Namu1.gif", 12) # 12 is the gif frame
 
-
-running = True
-
-while running:
-
-    for event in pygame.event.get():      # catch all the events that are happening right now
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-
-    # image of player
-    # background image
-
-    pygame.display.update()
-    clock.tick(120)
-
+# Game Functions
 def movement():
 
     nextFrame = clock()
@@ -57,3 +39,26 @@ def movement():
             changeSpriteImage(testSprite, 2*12 + frame)
         elif keyPressed("right"):
             changeSpriteImage(testSprite, 3*12 + frame)
+
+
+# Game Variables
+bg = pygame.image.load('/assets/background.jpg')
+testSprite = newSprite("./assets/Namu1.gif", 12) # 12 is the gif frame
+
+
+game_active = True
+
+while True:
+    for event in pygame.event.get():      # catch all the events that are happening right now
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    if game_active:
+        # Game Functions
+        # image of player
+        # background image
+
+    pygame.display.update()
+    clock.tick(120)
+
