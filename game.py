@@ -64,9 +64,9 @@ while game_running:
 
     if game_active:
         pass
-
-    screen.blit(sand, (0, 0))
-
+        # Game Functions
+        # image of player
+        # background image
 
     pygame.display.update()
     clock.tick(120)
