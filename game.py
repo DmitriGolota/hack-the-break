@@ -9,6 +9,7 @@ Member List
 Mar 13, 2021
 """
 
+
 import pygame
 import sys
 import random
@@ -16,11 +17,14 @@ from pygame_functions import *
 
 
 pygame.init()
+pygame.mixer.init()
 pygame.display.set_caption("Namu")
 
 WINDOW_SIZE = (500, 500)
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
+#pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
+#pygame.mixer.music.play(loops=-1)
 
 # Game Classes
 
