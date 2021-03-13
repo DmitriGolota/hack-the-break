@@ -88,8 +88,12 @@ sand_surface = pygame.image.load('./assets/new_sand.png').convert()
 sand_surface = pygame.transform.scale(sand_surface, (512, 56))
 
 # Background_Image
-bg_1 = pygame.image.load('./assets/bg-1.png')
+bg_1 = pygame.image.load('./assets/bg-1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+
+# Obstacles
+obstacle_1 = pygame.image.load('./assets/iceberg.png')
+obstacle_1 = pygame.transform.scale(obstacle_1, (100, 160))
 
 
 # Game Functions
@@ -166,6 +170,7 @@ while game_running:
     # Background image
     screen.blit(bg_1, (0, 0))
     screen.blit(sand_surface, (0, 445))
+    screen.blit(obstacle_1, (0, 0))
 
 
     if game_active:
