@@ -68,6 +68,8 @@ while game_running:
             pygame.quit()
             sys.exit()
 
+    screen.blit(sand, (0, 0))
+
     if game_active:
 
         # Game Functions
@@ -75,7 +77,7 @@ while game_running:
         # background image
         score_display()
 
-    screen.blit(sand, (0, 0))
+
 
     pygame.display.update()
     clock.tick(120)
