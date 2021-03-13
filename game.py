@@ -16,6 +16,16 @@ import random
 from pygame_functions import *
 import time
 
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
+
 pygame.init()
 pygame.mixer.init()
 pygame.display.set_caption("Namu")
