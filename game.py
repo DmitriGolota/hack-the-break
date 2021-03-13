@@ -28,7 +28,7 @@ class Namu(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__()
         self.sprites = []
-        self.sprites.append(pygame.image.load("./assets/Namu1.gif"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f1.png"))
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
