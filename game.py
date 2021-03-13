@@ -71,6 +71,12 @@ class Namu(pygame.sprite.Sprite):
 
             self.image = self.sprites[self.current_sprite]
 
+        # Move the sprite based on user keypresses.
+        if pressed_keys[K_UP]:
+            self.rect.move_ip(0, -5)
+        if pressed_keys[K_DOWN]:
+            self.rect.move_ip(0, 5)
+
 
 class button():
 
@@ -210,6 +216,12 @@ while game_running:
         if event.type == pygame.KEYDOWN: # Move Namu with space bar
             if event.type == pygame.K_SPACE:
                 pass
+
+    # Get all the keys currently pressed.
+    pressed_keys = pygame.key.get_pressed()
+
+    # Update the layer sprite based on user keypresses.
+    player.update()
 
 
     # Background image
