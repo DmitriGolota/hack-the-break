@@ -29,6 +29,17 @@ class Namu(pygame.sprite.Sprite):
         super().__init__()
         self.sprites = []
         self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f1.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f2.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f3.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f4.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f5.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f6.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f7.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f8.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f9.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f10.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f11.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuAnim/Namu_right_f12.png"))
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
