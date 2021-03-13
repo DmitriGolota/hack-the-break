@@ -67,7 +67,7 @@ class Namu(pygame.sprite.Sprite):
 # Namu class test
 
 moving_sprite = pygame.sprite.Group()
-player = Namu(100,100)
+player = Namu(100, 100)
 moving_sprite.add(player)
 
  # Namu class test
@@ -80,8 +80,12 @@ score = 0
 high_score = 0
 
 # Floor_Sand
-sand = pygame.image.load('./assets/sand.png').convert()
-sand = pygame.transform.scale(sand, (512, 512))
+sand_surface = pygame.image.load('./assets/new_sand.png').convert()
+sand_surface = pygame.transform.scale(sand_surface, (512, 56))
+
+# Background_Image
+bg_1 = pygame.image.load('./assets/bg-1.png')
+bg_1 = pygame.transform.scale(bg_1, (512, 512))
 
 
 # Game Functions
@@ -156,7 +160,9 @@ while game_running:
 
 
     # Background image
-    screen.blit(sand, (0, 0))
+    screen.blit(bg_1, (0, 0))
+    screen.blit(sand_surface, (0, 445))
+
 
     if game_active:
         # image of player
