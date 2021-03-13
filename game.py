@@ -51,7 +51,7 @@ moving_sprite.add(player)
 # Game Variables
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 7)
 score = 0
-high_score = 100
+high_score = 0
 
 # Floor_Sand
 sand = pygame.image.load('./assets/sand.png').convert()
@@ -123,6 +123,12 @@ def score_display(game_state):
         high_score_surface = game_font.render(f'High score: {int(high_score)}', True, (255, 255, 255))
         high_score_rect = high_score_surface.get_rect(center=(250, 400))
         screen.blit(high_score_surface, high_score_rect)
+
+
+def update_score(score, high_score):
+    if score > high_score:
+        high_score = score
+    return high_score
 
 
 # Main Loop
