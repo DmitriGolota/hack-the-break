@@ -59,7 +59,6 @@ class Namu(pygame.sprite.Sprite):
             if self.current_sprite >= len(self.sprites):
                 self.current_sprite = 0
 
-
             self.image = self.sprites[self.current_sprite]
 
 
@@ -95,6 +94,7 @@ high_score = 0
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
 sand_surface = pygame.transform.scale(sand_surface, (512, 56))
+sand_x_position = 0
 
 # Background_Image
 bg_1 = pygame.image.load('./assets/bg-1.png').convert()
@@ -161,6 +161,16 @@ def update_score(score, high_score):
     return high_score
 
 
+def move_sand(floor_position):
+    floor_position -= 10
+    screen.blit(sand_surface, (floor_position, 445))
+    screen.blit(sand_surface, (floor_position + 500, 445))
+    if floor_position <= - 500:
+        return 0
+    else:
+        return floor_position
+
+
 # Main Loop
 game_active = True
 game_running = True
@@ -179,7 +189,7 @@ while game_running:
 
     # Background image
     screen.blit(bg_1, (0, 0))
-    screen.blit(sand_surface, (0, 445))
+    sand_x_position = move_sand(sand_x_position)
     screen.blit(obstacle_1, (0, 0))
 
 
