@@ -5,22 +5,38 @@ Member List
 - Sally Poon
 - Subin Moon
 - Martin Gatchev
-
 Mar 13, 2021
 """
+
 
 import pygame
 import sys
 import random
 from pygame_functions import *
+from pygame.locals import *
+import time
 
+
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT,
+)
 
 pygame.init()
+pygame.mixer.init()
 pygame.display.set_caption("Namu")
 
 WINDOW_SIZE = (500, 500)
+display = pygame.Surface((500, 500))
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
+#pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
+#pygame.mixer.music.play(loops=-1)
 
 # Game Classes
 
@@ -47,8 +63,6 @@ class Namu(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
 
-    def animate(self):
-        self.is_animating = True
 
     def update(self):
         if self.is_animating:
@@ -56,10 +70,106 @@ class Namu(pygame.sprite.Sprite):
 
             if self.current_sprite >= len(self.sprites):
                 self.current_sprite = 0
-                self.is_animating = False
 
             self.image = self.sprites[self.current_sprite]
 
+        # Move the sprite based on user keypresses.
+        if pressed_keys[K_UP]:
+            self.rect.move_ip(0, -5)
+        if pressed_keys[K_DOWN]:
+            self.rect.move_ip(0, 5)
+        if pressed_keys[K_LEFT]:
+            self.rect.move_ip(-5, 0)
+        if pressed_keys[K_RIGHT]:
+            self.rect.move_ip(5, 0)
+
+
+class NamuMamu(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y):
+        super().__init__()
+        self.sprites = []
+        self.is_animating = True
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f1.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f2.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f3.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f4.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f5.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f6.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f7.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f8.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f9.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f10.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f11.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f12.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f13.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f14.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f15.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f16.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f17.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f18.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f19.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f20.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f21.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f22.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f23.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f24.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f25.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f26.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f27.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f28.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f29.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f30.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f31.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f32.png"))
+
+
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+
+        self.rect = self.image.get_rect()
+        self.rect.bottomright = [pos_x, pos_y]
+
+
+    def update(self):
+        if self.is_animating:
+            self.current_sprite += 1
+
+            if self.current_sprite >= len(self.sprites):
+                self.current_sprite = 0
+
+            self.image = self.sprites[self.current_sprite]
+
+
+class menu():
+    def __init__(self):
+        self.mid_w, self.mid_h = 250, 250
+        self.run_display = True
+        self.cursor_rect = pygame.Rect(0, 0, 20, 20)
+        self.offset = -100
+
+    def draw_cursor(self):
+        font = pygame.font.Font(',/assets/Fipps_font.otf', 50)
+        text_surface = font.render('*', True, (255, 255, 255))
+        text_rect = text_surface.get_rect()
+        text_rect.center = (self.cursor_rect.x, self.cursor_rect.y)
+        screen.blit(text_surface, text_rect)
+
+    def blit_screen(self):
+        screen.blit(display, (0, 0))
+        pygame.display.update()
+        UP_KEY, DOWN_KEY, START_KEY, BACK_KEY = False, False, False, False
+
+
+class main_menu(menu):
+    def __init__(self):
+        menu.__init__(self)
+        self.state = 'Start'
+        self.startx, self.starty = self.mid_w, self.mid_h + 30
+        self.quitx, self.quity = self.mid_w, self.mid_h + 50
+        self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
+
+    def display_menu(self):
+        self.run_display = True
 
 
 # class test
@@ -70,22 +180,32 @@ moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
 moving_sprite.add(player)
 
- # Namu class test
+final_check = NamuMamu(600, 500)
+moving_sprite.add(final_check)
+# Namu class test
 
 
 
 # Game Variables
-game_font = pygame.font.Font('./assets/Fipps_font.otf', 7)
+game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
 high_score = 0
+
+
 
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
 sand_surface = pygame.transform.scale(sand_surface, (512, 56))
+sand_x_position = 0
 
 # Background_Image
-bg_1 = pygame.image.load('./assets/bg-1.png')
+bg_1 = pygame.image.load('./assets/bg-1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+bg_x_position = 0
+
+# Obstacles
+obstacle_1 = pygame.image.load('./assets/iceberg.png')
+obstacle_1 = pygame.transform.scale(obstacle_1, (100, 160))
 
 
 # Game Functions
@@ -125,15 +245,15 @@ def generate_random_question():
 
 def score_display(game_state):
     if game_state == 'main_game':
-        score_surface = game_font.render(str(score), True, (255, 255, 255))
-        score_rect = score_surface.get_rect(center=(250, 25))
+        score_surface = game_font.render(str(score), True, (39, 60, 117))
+        score_rect = score_surface.get_rect(center=(250, 17))
         screen.blit(score_surface, score_rect)
     if game_state == 'game_over':
-        score_surface = game_font.render(f'Score: {int(score)}', True, (255, 255, 255))
-        score_rect = score_surface.get_rect(center=(250, 25))
+        score_surface = game_font.render(f'Score: {int(score)}', True, (39, 60, 117))
+        score_rect = score_surface.get_rect(center=(250, 17))
         screen.blit(score_surface, score_rect)
 
-        high_score_surface = game_font.render(f'High score: {int(high_score)}', True, (255, 255, 255))
+        high_score_surface = game_font.render(f'High score: {int(high_score)}', True, (39, 60, 117))
         high_score_rect = high_score_surface.get_rect(center=(250, 400))
         screen.blit(high_score_surface, high_score_rect)
 
@@ -144,24 +264,50 @@ def update_score(score, high_score):
     return high_score
 
 
+def move_sand(floor_position):
+    floor_position -= 10
+    screen.blit(sand_surface, (floor_position, 445))
+    screen.blit(sand_surface, (floor_position + 500, 445))
+    if floor_position <= - 500:
+        return 0
+    else:
+        return floor_position
+
+
+def move_bg(bg_position):
+    bg_position -= 2
+    screen.blit(bg_1, (bg_position, 0))
+    screen.blit(bg_1, (bg_position + 500, 0))
+    if bg_position <= - 500:
+        return 0
+    else:
+        return bg_position
+
+
 # Main Loop
 game_active = True
 game_running = True
 
 while game_running:
     pygame.time.delay(100)
+
     for event in pygame.event.get():      # catch all the events that are happening right now
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                game_running = False
+
         if event.type == pygame.QUIT: # Quitting the game
             pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN: # Move Namu with space bar
             if event.type == pygame.K_SPACE:
-                Namu.animate()
+                pass
 
+    # Get all the keys currently pressed.
+    pressed_keys = pygame.key.get_pressed()
 
-    # Background image
-    screen.blit(bg_1, (0, 0))
-    screen.blit(sand_surface, (0, 445))
+    # Update the layer sprite based on user keypresses.
+    player.update()
 
 
     # Background
@@ -171,10 +317,8 @@ while game_running:
 
     if game_active:
         # image of player
-
         moving_sprite.draw(screen)
         moving_sprite.update()
-
 
         # Game Functions
         score_display('main_game')
@@ -182,8 +326,10 @@ while game_running:
     # game over
     else:
         score_display('game_over')
+        time.sleep(5)
 
     pygame.display.update()
     clock.tick(120)
+
 
 pygame.quit()
