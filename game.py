@@ -500,9 +500,12 @@ def game_intro():
         screen.blit(main_bg, (0, 0))
         screen.blit(main_logo, (75, 50))
         large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
+        TextSurf1, TextRect1 = text_objects("Use the directional keys to move Namu!", large_text)
         TextSurf, TextRect = text_objects("created by: Chansaa, Dmitri, Marti, Subin, & Sally", large_text)
         TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT -100))
+        TextRect1.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 50))
         screen.blit(TextSurf, TextRect)
+        screen.blit(TextSurf1,TextRect1)
 
         button("GO", 100, 300, 100, 50, 'white', 'lightblue', main_game_tester)
         button("QUIT", 300, 300, 100, 50, 'white', (255, 100, 100), quit)
