@@ -186,7 +186,7 @@ seaweed_2 = pygame.image.load('./assets/seaweed2.png')
 seaweed_2 = pygame.transform.scale(seaweed_2, (80, 250))
 
 obstacle_bottom = []
-OBSTACLE_HEIGHTS_BOTTOM = [550, 600, 650, 700]
+OBSTACLE_HEIGHTS_BOTTOM = [500, 525, 600, 650]
 
 
 # Game Functions
@@ -355,7 +355,6 @@ while game_running:
         if event.type == SPAWN_TIME:
             obstacle_top.append(get_top_obstacle())
             obstacle_bottom.append(get_bottom_obstacle())
-            print(obstacle_bottom)
 
     # Get all the keys currently pressed.
     pressed_keys = pygame.key.get_pressed()
