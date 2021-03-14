@@ -378,9 +378,12 @@ def game_intro():
                 pygame.quit()
                 quit()
 
+        main_logo = pygame.image.load("./assets/namu_logo.png")
+        main_logo = pygame.transform.scale(main_logo, (180*2, 100*2))
         screen.blit(bg_1, (0, 0))
+        screen.blit(main_logo, (75, 50))
         large_text = pygame.font.SysFont('timesnewromanbold', 20)
-        TextSurf, TextRect = text_objects("Suavemans Namu, u rdy to vibe?", large_text)
+        TextSurf, TextRect = text_objects("", large_text)
         TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT / 2))
         screen.blit(TextSurf, TextRect)
 
