@@ -161,7 +161,7 @@ moving_sprite.add(player)
 # Game Variables
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
-high_score = 0
+POINT = 10
 
 # ====== BACKGROUNDS ===================================================================================================
 
@@ -317,6 +317,7 @@ def print_trivia_question(trivia_question):
 def trivia_display(trivia_questions, trivia_number):
     current_trivia = trivia_questions[trivia_number]
     pause = True
+    score = 0
 
     print(current_trivia["question"])
     trivia_print_options(current_trivia["options"])
@@ -329,20 +330,22 @@ def trivia_display(trivia_questions, trivia_number):
         if event.type == KEYDOWN:
             if event.key == pygame.key.key_code(current_trivia["answer"]):
                 print("You're right!")
+                score += update_score(True)
             else:
                 print("You're Wrong :(")
+
             pause = False
 
     print(current_trivia["fact"])
 
     time.sleep(8)
     clock.tick(5)
-    return trivia_number
+    return trivia_number, score
 
 
 # Game Functions
 
-def score_display(game_state):
+def score_display(game_state, score):
     if game_state == 'main_game':
         score_surface = game_font.render(str(score), True, (39, 60, 117))
         score_rect = score_surface.get_rect(center=(250, 17))
@@ -352,15 +355,10 @@ def score_display(game_state):
         score_rect = score_surface.get_rect(center=(250, 17))
         screen.blit(score_surface, score_rect)
 
-        high_score_surface = game_font.render(f'High score: {int(high_score)}', True, (39, 60, 117))
-        high_score_rect = high_score_surface.get_rect(center=(250, 400))
-        screen.blit(high_score_surface, high_score_rect)
 
-
-def update_score(score, high_score):
-    if score > high_score:
-        high_score = score
-    return high_score
+def update_score(answer: bool):
+    if answer:
+        return 10
 
 # ==================== Background Functions ============================================================================
 
@@ -496,6 +494,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
         if loop_times % 60 == 0:
             trivia_display(TRIVIA_Qs(), trivia_num)
+            score = trivia_display((TRIVIA_Qs(), trivia_num[1]))
             trivia_num += 1
 
         # prints Namus mom on the screen when condition reached
@@ -537,12 +536,12 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
             moving_sprite.update()
 
             # Game Functions
-            score_display('main_game')
+            score_display('main_game', score)
 
         # game over
         else:
             screen.fill("white")
-            score_display('game_over')
+            score_display('game_over', score)
             time.sleep(10)
 
         pygame.display.update()
