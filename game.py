@@ -223,6 +223,8 @@ def BOTTOM_OBS1():
 
 # ====================== Quiz Function =================================================================================
 
+def TRIVIA_SCREEN():
+    return
 
 def START_TRIVIA_Q():
     return 0
@@ -340,7 +342,7 @@ def trivia_display(trivia_questions, trivia_number):
 
     time.sleep(8)
     clock.tick(5)
-    return trivia_number, score
+    return score
 
 
 # Game Functions
@@ -494,8 +496,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         pygame.time.delay(100)
 
         if loop_times % 60 == 0:
-            trivia_display(TRIVIA_Qs(), trivia_num)
-            score = trivia_display((TRIVIA_Qs(), trivia_num[1]))
+            score = trivia_display(TRIVIA_Qs(), trivia_num)
             trivia_num += 1
 
         # prints Namus mom on the screen when condition reached
