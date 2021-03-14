@@ -158,7 +158,6 @@ moving_sprite.add(player)
 
 # Namu class test
 
-
 # Game Variables
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
@@ -241,7 +240,12 @@ def TRIVIA_Qs():
                               "All the above"],
                   "answer": "4", "fact": "All the above. The Ocean is thus essential to life on "
                                          "Earth from producing 50-80% of the Oxygen we breath, "
-                                         "regulating the seasons, and sustaining food chains on and off land."}]
+                                         "regulating the seasons, and sustaining food chains on and off land."},
+                 {"question": "How much plastic waste is dumped into the ocean each year??",
+                  "options": ["45,000 tons", "3 million tons", "6.4 million tons", "8 million tons"],
+                  "answer": "4", "fact": "8 Million! This is a sad truth, we must remember to be mindful of our"
+                                         "usage of single-use plastics and recycling habits!"}
+                 ]
     return questions
 
 
@@ -469,6 +473,12 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         if loop_times % 60 == 0:
             trivia_display(TRIVIA_Qs(), trivia_num)
             trivia_num += 1
+
+        # prints Namus mom on the screen when condition reached
+        if loop_times == 100:
+            final_spawn = NamuMamu(650, 550)
+            moving_sprite.add(final_spawn)
+
         else:
             for event in pygame.event.get():  # catch all the events that are happening right now
                 if event.type == KEYDOWN:
@@ -516,10 +526,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         loop_times += 1
         print(loop_times)
 
-        # prints namus mom on the screen when condition reached
-        if loop_times == 500:
-            final_spawn = NamuMamu(100, 100)
-            moving_sprite.add(final_spawn)
+
 
 
 
