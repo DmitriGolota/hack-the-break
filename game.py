@@ -108,6 +108,20 @@ class NamuMamu(pygame.sprite.Sprite):
         self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f16.png"))
         self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f17.png"))
         self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f18.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f19.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f20.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f21.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f22.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f23.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f24.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f25.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f26.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f27.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f28.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f29.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f30.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f31.png"))
+        self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f32.png"))
 
 
         self.current_sprite = 0
