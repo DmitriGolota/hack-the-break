@@ -499,7 +499,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
             trivia_num += 1
 
         # prints Namus mom on the screen when condition reached
-        if loop_times == 100:
+        if trivia_num == 8:
             final_spawn = NamuMamu(650, 550)
             moving_sprite.add(final_spawn)
 
@@ -549,9 +549,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         clock.tick(120)
         loop_times += 1
         print(loop_times)
-
-
-
 
 
     pygame.quit()
