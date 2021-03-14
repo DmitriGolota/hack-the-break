@@ -313,12 +313,11 @@ def get_color(self):
         return 69, 123, 157 #soft blue
 
 def trivia_print_options(option_lst):
-    first_option_loc = (120, 120)
-    for x in range(len(option_lst)):
+    first_option_loc = (110, 110)
+    for num, item in enumerate(option_lst, 1):
         font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
-        option_surf = font.render(str(x + 1) + " - " + option_lst[x], True, (0, 0, 0))
-        screen.blit(option_surf, [first_option_loc[0], first_option_loc[1] + 30 * x])
-
+        option_surf = font.render(f"{num} - {item}", True, (0, 0, 0))
+        screen.blit(option_surf, [first_option_loc[0], first_option_loc[1] + 30 * num])
 
 
 def print_trivia_question(trivia_question):
@@ -342,10 +341,10 @@ def trivia_display(trivia_questions, trivia_number, score):
     text_surf = large_text.render(current_trivia["question"], True, (0, 0, 0))
     screen.blit(text_surf, [80, 80])
 
+    trivia_print_options(current_trivia["options"])
 
     pygame.display.update() # need this to update the screen and show all the stuff
 
-    trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
 
     time.sleep(3)
