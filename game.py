@@ -7,6 +7,7 @@ Member List
 - Martin Gatchev
 Mar 13, 2021
 """
+
 import time
 import random
 from pygame_functions import *
@@ -32,7 +33,7 @@ screen = pygame.display.set_mode(WINDOW_SIZE)
 clock = pygame.time.Clock()
 
 music = ["./assets/sounds/NAMU-1.mp3", "./assets/sounds/NAMU-2.mp3", "./assets/sounds/NAMU-3.mp3"]
-pygame.mixer.music.load(music[random.randint(0, 2)])
+pygame.mixer.music.load(music[0])
 pygame.mixer.music.play(loops=-1)
 
 
@@ -488,10 +489,10 @@ def game_intro():
         main_logo = pygame.transform.scale(main_logo, (180*2, 100*2))
         screen.blit(main_bg, (0, 0))
         screen.blit(main_logo, (75, 50))
-        small_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20 )
+        small_text = pygame.font.SysFont('./assets/Fipps_font.otf', 18)
         large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 30)
-        TextSurf1, TextRect1 = text_objects("Use the directional keys to move Namu!", large_text)
-        TextSurf, TextRect = text_objects("created by: Chansaa, Dmitri, Marti, Subin, & Sally", small_text)
+        TextSurf1, TextRect1 = text_objects("Use the directional keys to guide Namu home!", large_text)
+        TextSurf, TextRect = text_objects("Created by: Chansaa, Dmitri, Marti, Subin, & Sally", small_text)
         TextRect.center = ((WINDOW_WIDTH / 2 ), (WINDOW_HEIGHT - 20))
         TextRect1.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 100))
         screen.blit(TextSurf, TextRect)
