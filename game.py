@@ -163,6 +163,13 @@ while game_running:
     screen.blit(bg_1, (0, 0))
     screen.blit(sand_surface, (0, 445))
 
+    menu = pygame_menu.Menu(300, 400, 'Welcome',
+                            theme=pygame_menu.themes.THEME_BLUE)
+
+    menu.add_text_input('Name :', default='John Doe')
+    menu.add_selector('Difficulty :', [('Hard', 1), ('Easy', 2)])
+    menu.add_button('Play')
+    menu.add_button('Quit', pygame_menu.events.EXIT)
 
     if game_active:
         # image of player
