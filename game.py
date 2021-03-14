@@ -279,18 +279,17 @@ def TRIVIA_Qs():
          "options": ["Deforestation", "Stormwater Runoff", "Sunscreen", "All the above"],
          "answer": "4",
          "fact": "All the above. One of the major ways you can contribute to preserving the Ocean is"
-                 "by being conscious of the plastics, chemicals, and products that you use which may cause harm"
+                 "by being conscious of user of plastics, chemicals, and products that may cause harm"
                  "to the ecosystem."},
 
         {"question": "What is the Great Pacific Garbage Patch?",
          "options": ["A giant dump that collects all of the Pacific's garbage together",
                      "A giant vortex of trash in the Pacific Ocean",
-                     "An art installation by Banksy representing the waste produced annually"
-                     "A huge island of waste on the West shore that has been problematic to the ocean"],
+                     "An art installation representing the waste produced annually"
+                     "A huge island of waste on the West shore"],
          "answer": "2",
-         "fact": "It is a collection of two garbage patches floating in the Pacific Ocean which is also known as "
-                 "the Pacific Ocean trash vortex. The area spans from the West Coast of USA to Japan, trapping marine "
-                 "debris which is mostly made up of plastics waste and microplastics manufactured by humans. "
+         "fact": "It is a collection of two garbage patches floating in the Pacific Ocean spanning from the West "
+                 "Coast of USA to Japan, mostly made up of plastics waste and microplastics manufactured by humans. "
                  "It continues to expand every day."},
 
         {"question": "How many pieces of plastic is estimated to be in the GPGP?",
@@ -312,16 +311,18 @@ def get_color(self):
     else:
         return 69, 123, 157 #soft blue
 
+
 def trivia_print_options(option_lst):
     first_option_loc = (110, 110)
     for num, item in enumerate(option_lst, 1):
-        font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
-        option_surf = font.render(f"{num} - {item}", True, (0, 0, 0))
-        screen.blit(option_surf, [first_option_loc[0], first_option_loc[1] + 30 * num])
+        print_trivia_lines(f"{num} - {item}", first_option_loc[1] + 30 * num)
+    print_trivia_lines(f"Press the KEY of your answer.", 260)
 
 
-def print_trivia_question(trivia_question):
-    pass
+def print_trivia_lines(text, y_position):
+    font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
+    surface = font.render(text, True, (0, 0, 255))
+    screen.blit(surface, (80, y_position))
 
 
 def trivia_display(trivia_questions, trivia_number, score):
@@ -338,7 +339,7 @@ def trivia_display(trivia_questions, trivia_number, score):
     """text_rect.topleft = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 100))
     screen.blit(text_surf, text_rect)"""
 
-    text_surf = large_text.render(current_trivia["question"], True, (0, 0, 0))
+    text_surf = large_text.render(current_trivia["question"], True, (0, 0, 25))
     screen.blit(text_surf, [80, 80])
 
     trivia_print_options(current_trivia["options"])
