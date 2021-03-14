@@ -316,16 +316,15 @@ def print_trivia_question(trivia_question):
     pass
 
 
-def trivia_display(trivia_questions, trivia_number):
+def trivia_display(trivia_questions, trivia_number, score):
     current_trivia = trivia_questions[trivia_number]
     pause = True
-    score = 0
 
     print(current_trivia["question"])
     trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
 
-    time.sleep(5)
+    time.sleep(3)
 
     while pause:
         event = pygame.event.wait()
@@ -360,7 +359,7 @@ def score_display(game_state, score):
 
 def update_score(answer: bool):
     if answer:
-        return 10
+        return 100
 
 # ==================== Background Functions ============================================================================
 
@@ -496,7 +495,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         pygame.time.delay(100)
 
         if loop_times % 60 == 0:
-            score = trivia_display(TRIVIA_Qs(), trivia_num)
+            score = trivia_display(TRIVIA_Qs(), trivia_num, score)
             trivia_num += 1
 
         # prints Namus mom on the screen when condition reached
