@@ -230,9 +230,10 @@ def START_TRIVIA_Q():
 
 def TRIVIA_Qs():
     questions = [
+
         {"question": "How many different species of fish exist in the Ocean?",
-         "options": ["15_000", "32_000", "40_000", "23_000"],
-         "answer": "2",
+         "options": ["15_000", "40_000", "32_000", "23_000"],
+         "answer": "3",
          "fact": "32 000! This is greater than the total of all other vertebrate species "
                  "(amphibians, reptiles, birds, and mammals) combined."},
 
@@ -257,7 +258,48 @@ def TRIVIA_Qs():
          "answer": "4",
          "fact": "Trick question! Scientists have no way of tracking how many species there are in the ocean "
                  "since the majority of it has yet to be observed. They estimate that there are roughly 91% of "
-                 "species remain undiscovered in the ecosystem; there can be millions of species!"}
+                 "species remain undiscovered in the ecosystem; there can be millions of species!"},
+
+        {"question": "Since Algae produces oxygen, all Algae are important to the Ocean ecosystem. "
+                     "The more algae there are, the better!",
+         "options": ["True", "False"],
+         "answer": "2",
+         "fact": "False. While most algae is beneficial, too much algae is not good always good! Without a rich "
+                 "ecosystem to consume and break down algae growth, Harmful Algal Blooms can happen. "
+                 "The overwhelming amount of algae depletes the oxygen in the waters and may release toxins "
+                 "that drive fish away, kill organisms in the area, and cause human/animal sickness."},
+
+        {"question": "How much money does the illegal, unreported, and unregulated fishing industry make per year?",
+         "options": ["$36.4 billion", "$13.3 billion", "$18 billion", "$28.7 billion"],
+         "answer": "1",
+         "fact": "$36.4 billion. Illegal fishing contributes overfishing because it is untraceable."},
+
+        {"question": "What contributes to pollution in the Ocean?",
+         "options": ["Deforestation", "Stormwater Runoff", "Sunscreen", "All the above"],
+         "answer": "4",
+         "fact": "All the above. One of the major ways you can contribute to preserving the Ocean is"
+                 "by being conscious of the plastics, chemicals, and products that you use which may cause harm"
+                 "to the ecosystem."},
+
+        {"question": "What is the Great Pacific Garbage Patch?",
+         "options": ["A giant dump that collects all of the Pacific's garbage together",
+                     "A giant vortex of trash in the Pacific Ocean",
+                     "An art installation by Banksy representing the waste produced annually"
+                     "A huge island of waste on the West shore that has been problematic to the ocean"],
+         "answer": "2",
+         "fact": "It is a collection of two garbage patches floating in the Pacific Ocean which is also known as "
+                 "the Pacific Ocean trash vortex. The area spans from the West Coast of USA to Japan, trapping marine "
+                 "debris which is mostly made up of plastics waste and microplastics manufactured by humans. "
+                 "It continues to expand every day."},
+
+        {"question": "How many pieces of plastic is estimated to be in the GPGP?",
+         "options": ["980 billion pieces",
+                     "2.3 trillion pieces",
+                     "3.6 trillion pieces",
+                     "1.5 trillion pieces"],
+         "answer": "3",
+         "fact": "3.6 trillion pieces cover 1.6 million square km surface area of the ocean. "
+                 "That's approximately twice the size of Texas."}
 
                  ]
     return questions
@@ -280,7 +322,7 @@ def trivia_display(trivia_questions, trivia_number):
     trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
 
-    time.sleep(3)
+    time.sleep(5)
 
     while pause:
         event = pygame.event.wait()
@@ -293,7 +335,8 @@ def trivia_display(trivia_questions, trivia_number):
 
     print(current_trivia["fact"])
 
-    time.sleep(10)
+    time.sleep(8)
+    clock.tick(5)
     return trivia_number
 
 
