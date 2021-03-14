@@ -311,7 +311,6 @@ def get_color(self):
     else:
         return 69, 123, 157 #soft blue
 
-
 def trivia_print_options(option_lst):
     first_option_loc = (110, 110)
     for num, item in enumerate(option_lst, 1):
@@ -324,6 +323,10 @@ def print_trivia_lines(text, y_position):
     surface = font.render(text, True, (0, 0, 255))
     screen.blit(surface, (80, y_position))
 
+def print_correct_response(text):
+    font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
+    text_option = font.render(text, True, (0, 0, 0))
+    screen.blit(text_option, [100, 350])
 
 def print_trivia_multilines(text_chunk, start_y_position):
     words_lst = text_chunk.split(" ")
