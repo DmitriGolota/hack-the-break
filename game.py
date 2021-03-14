@@ -369,6 +369,22 @@ def draw_top_obstacle(obstacles):
 
 # Menu Init
 
+menu = pygame_menu.Menu(
+    height=300,
+    theme=pygame_menu.themes.THEME_BLUE,
+    title='Welcome',
+    width=400
+)
+
+def start_the_game():
+    pass
+
+user_name = menu.add_text_input('Name: ', default='John Doe', maxchar=10)
+menu.add_button('Play', start_the_game)
+menu.add_button('Quit', pygame_menu.events.EXIT)
+
+menu.mainloop(screen)
+
 # Main Loop
 
 game_active = True
@@ -424,6 +440,8 @@ while game_running:
 
     pygame.display.update()
     clock.tick(120)
+
+
 
 
 pygame.quit()
