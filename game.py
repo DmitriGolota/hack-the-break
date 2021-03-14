@@ -470,7 +470,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
             moving_sprite.draw(screen)
             moving_sprite.update()
 
-            if check_collision(obstacle_lst):
+            if check_collision(obstacle_lst, player):
                 print('yo')
 
             # Game Functions
