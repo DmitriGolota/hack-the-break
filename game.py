@@ -236,8 +236,8 @@ def TRIVIA_Qs():
         {"question": "How many different species of fish exist in the Ocean?",
          "options": ["15_000", "40_000", "32_000", "23_000"],
          "answer": "3",
-         "fact": "32 000! This is greater than the total of *all other vertebrate species *"
-                 "(amphibians, reptiles, birds, and mammals)* combined."},
+         "fact": "32 000! This is greater than the total of all other* vertebrate species "
+                 "(amphibians, reptiles, birds, and* mammals) combined."},
 
         {"question": "The Ocean contributes to: ",
          "options": ["Producing Oxygen and storing Carbon Dioxide",
@@ -249,49 +249,48 @@ def TRIVIA_Qs():
                  "Earth* from producing 50-80% of the Oxygen we breath,* "
                  "regulating the seasons, to sustaining food* chains on and off land."},
 
-        {"question": "How much of the Ocean have humans been* able to map, explore, and observe?",
+        {"question": "How much of the Ocean have humans been able to map,* explore, and observe?",
          "options": ["20%", "35%", "55%", "we've mapped it all, of course!"],
          "answer": "1",
-         "fact": "Roughly 20%. The Ocean covers 70% of our planet's surface, "
-                 "80% of it still remains unobserved, undiscovered, and unmapped."},
+         "fact": "Roughly 20%. The Ocean covers 70% of our *planet's surface, "
+                 "80% of it still remains *unobserved, undiscovered, and unmapped."},
 
         {"question": "How many species live in the Ocean?",
          "options": ["360 000", "620 000", "78 300", "I'm not really sure"],
          "answer": "4",
-         "fact": "Trick question! Scientists have no way of tracking how many species there are in the ocean "
-                 "since the majority of it has yet to be observed. There are roughly 91% of "
-                 "species remain undiscovered in the ecosystem; there can be millions of species!"},
+         "fact": "Trick question! Scientists have no way of tracking* how many species there are in the ocean "
+                 "since the* majority of it has yet to be observed.* There's roughly 91% "
+                 "species remaining to be be* discovered in the ecosystem; there can be millions!"},
 
-        {"question": "Since Algae produces Oxygen, all Algae are important to the Ocean ecosystem. "
-                     "The more algae there are, the better!",
+        {"question": "Since Algae produces Oxygen,* all Algae are important to the Ocean ecosystem. "
+                     "*The more the merrier!",
          "options": ["True", "False"],
          "answer": "2",
-         "fact": "False. While most algae is beneficial, too much algae is not good always good! Without a rich "
-                 "ecosystem to consume and break down algae growth, Harmful Algal Blooms can happen. "
-                 "These blooms will deplete the oxygen in the waters and may release toxins "
-                 "that drive fish away, kill organisms in the area, and cause human/animal sickness."},
+         "fact": "False. While most algae is beneficial, too much algae* is not good always good! Harmful Algal"
+                 " Blooms* exist & they deplete the oxygen in the waters* or may release toxins "
+                 "that harm organisms in the* water, on land, and humans."},
 
-        {"question": "How much money does the illegal, unreported, and unregulated fishing industry make per year?",
+        {"question": "How much money does the illegal, unreported,* and unregulated fishing industry make* per year?",
          "options": ["$36.4 billion", "$13.3 billion", "$18 billion", "$28.7 billion"],
          "answer": "1",
-         "fact": "$36.4 billion. Illegal fishing contributes overfishing because it is untraceable."},
+         "fact": "$36.4 billion.* Illegal fishing contributes overfishing because *it is untraceable."},
 
         {"question": "What contributes to pollution in the Ocean?",
          "options": ["Deforestation", "Stormwater Runoff", "Sunscreen", "All the above"],
          "answer": "4",
-         "fact": "All the above. One of the major ways you can contribute to preserving the Ocean is"
-                 "by being conscious of user of plastics, chemicals, and products that may cause harm"
+         "fact": "All the above. One of the major ways you can contribute *to preserving the Ocean is"
+                 "by being conscious of *user of plastics, chemicals, and products that may cause *harm"
                  "to the ecosystem."},
 
         {"question": "What is the Great Pacific Garbage Patch?",
-         "options": ["A giant dump that collects all of the Pacific's garbage together",
+         "options": ["The Pacific's giant dumpsite",
                      "A giant vortex of trash in the Pacific Ocean",
-                     "An art installation representing the waste produced annually"
+                     "An well-known art installation on waste & consumption",
                      "A huge island of waste on the West shore"],
          "answer": "2",
-         "fact": "It is a collection of two garbage patches floating in the Pacific Ocean spanning from the West "
-                 "Coast of USA to Japan, mostly made up of plastics waste and microplastics manufactured by humans. "
-                 "It continues to expand every day."},
+         "fact": "It is a collection of two garbage patches floating *in the Pacific Ocean spanning from the West "
+                 "Coast *of USA to Japan, mostly made up of plastics waste *and microplastics manufactured by humans. "
+                 "It continues *to expand every day."},
 
         {"question": "How many pieces of plastic is estimated to be in the GPGP?",
          "options": ["980 billion pieces",
@@ -299,8 +298,8 @@ def TRIVIA_Qs():
                      "3.6 trillion pieces",
                      "1.5 trillion pieces"],
          "answer": "3",
-         "fact": "3.6 trillion pieces cover 1.6 million square km surface area of the ocean. "
-                 "That's approximately twice the size of Texas."}
+         "fact": "3.6 trillion pieces cover 1.6 million square km *surface area of the ocean. "
+                 "That's approximately twice the *size of Texas."}
 
                  ]
     return questions
@@ -314,7 +313,7 @@ def get_color(self):
 
 
 def trivia_print_options(option_lst):
-    first_option_loc = (110, 110)
+    first_option_loc = (110, 125)
     for num, item in enumerate(option_lst, 1):
         print_trivia_lines(f"{num} - {item}", first_option_loc[1] + 25 * num)
     print_trivia_lines(f"Press the KEY of your answer.", 250)
@@ -342,19 +341,11 @@ def trivia_display(trivia_questions, trivia_number, score):
     current_trivia = trivia_questions[trivia_number]
 
     screen.blit(TRIVIA_BG(), (50, 50)) # This is working!
-
-    # Stuff that isn't working :'(
     print_trivia_multilines(current_trivia["question"], 80)
-
     trivia_print_options(current_trivia["options"])
-
-    pygame.display.update() # need this to update the screen and show all the stuff
-
-    print("Press the KEY of your answer.")
+    pygame.display.update()
 
     time.sleep(3)
-
-    pygame.display.update()
 
     pause = True
 
@@ -367,10 +358,8 @@ def trivia_display(trivia_questions, trivia_number, score):
                 score += update_score(True)
             else:
                 print_trivia_lines("You're Wrong :(", 275)
-
             pause = False
 
-    print(current_trivia["fact"])
     print_trivia_multilines(current_trivia["fact"], 300)
     pygame.display.update()
 
@@ -565,7 +554,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         obstacle_lst = move_obstacles(obstacle_lst)
         draw_obstacles(obstacle_lst, TOP_OBS1(), BOTTOM_OBS1())
 
-        if loop_times % 20 == 0:
+        if loop_times % 100 == 0 and trivia_num <= (len(TRIVIA_Qs())):
             score = trivia_display(TRIVIA_Qs(), trivia_num, score)
             trivia_num += 1
 
@@ -587,6 +576,9 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         pygame.display.update()
         clock.tick(120)
         loop_times += 1
+
+        if loop_times == 1500:
+            game_running: False
 
 
     pygame.quit()
