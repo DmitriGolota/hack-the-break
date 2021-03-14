@@ -337,58 +337,59 @@ menu.add_text_input('Name: ', default="Suaveman Namu")
 menu.add_button('Play', start_game_button)
 menu.mainloop(screen)
 
-while game_running:
-    pygame.time.delay(100)
+def main_game_start():
+    while game_running:
+        pygame.time.delay(100)
 
 
-    for event in pygame.event.get():      # catch all the events that are happening right now
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                game_running = False
+        for event in pygame.event.get():      # catch all the events that are happening right now
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    game_running = False
 
-        if event.type == pygame.QUIT: # Quitting the game
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN: # Move Namu with space bar
-            if event.type == pygame.K_SPACE:
-                pass
-        if event.type == SPAWN_TOP:
-            obstacle_top.append(get_top_obstacle())
-            print(obstacle_top)
+            if event.type == pygame.QUIT: # Quitting the game
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN: # Move Namu with space bar
+                if event.type == pygame.K_SPACE:
+                    pass
+            if event.type == SPAWN_TOP:
+                obstacle_top.append(get_top_obstacle())
+                print(obstacle_top)
 
-    # Get all the keys currently pressed.
-    pressed_keys = pygame.key.get_pressed()
+        # Get all the keys currently pressed.
+        pressed_keys = pygame.key.get_pressed()
 
-    # Update the layer sprite based on user keypresses.
-    player.update()
-
-
-    # Background
-    bg_x_position = move_bg(bg_x_position)
-    sand_x_position = move_sand(sand_x_position)
-
-    # Top Obstacles
-    obstacle_top = move_top_obstacles(obstacle_top)
-    draw_top_obstacle(obstacle_top)
+        # Update the layer sprite based on user keypresses.
+        player.update()
 
 
-    if game_active:
-        # image of player
+        # Background
+        bg_x_position = move_bg(bg_x_position)
+        sand_x_position = move_sand(sand_x_position)
 
-        moving_sprite.draw(screen)
-        moving_sprite.update()
-
-
-        # Game Functions
-        score_display('main_game')
-
-    # game over
-    else:
-        score_display('game_over')
-        time.sleep(5)
-
-    pygame.display.update()
-    clock.tick(120)
+        # Top Obstacles
+        obstacle_top = move_top_obstacles(obstacle_top)
+        draw_top_obstacle(obstacle_top)
 
 
-pygame.quit()
+        if game_active:
+            # image of player
+
+            moving_sprite.draw(screen)
+            moving_sprite.update()
+
+
+            # Game Functions
+            score_display('main_game')
+
+        # game over
+        else:
+            score_display('game_over')
+            time.sleep(5)
+
+        pygame.display.update()
+        clock.tick(120)
+
+
+    pygame.quit()
