@@ -158,7 +158,6 @@ moving_sprite.add(player)
 
 # Namu class test
 
-
 # Game Variables
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
@@ -455,6 +454,12 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         if loop_times % 60 == 0:
             trivia_display(TRIVIA_Qs(), trivia_num)
             trivia_num += 1
+
+        # prints Namus mom on the screen when condition reached
+        if loop_times == 100:
+            final_spawn = NamuMamu(650, 550)
+            moving_sprite.add(final_spawn)
+
         else:
             for event in pygame.event.get():  # catch all the events that are happening right now
                 if event.type == KEYDOWN:
@@ -502,10 +507,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         loop_times += 1
         print(loop_times)
 
-        # prints namus mom on the screen when condition reached
-        if loop_times == 500:
-            final_spawn = NamuMamu(100, 100)
-            moving_sprite.add(final_spawn)
+
 
 
 
