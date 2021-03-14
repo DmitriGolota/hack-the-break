@@ -9,21 +9,28 @@ Member List
 Mar 13, 2021
 """
 import time
-import pygame
-import pygame_menu
 import random
 from pygame_functions import *
 from itertools import cycle
-from pygame.locals import (K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, KEYDOWN, QUIT)
-
+from pygame.locals import (
+    K_UP,
+    K_DOWN,
+    K_LEFT,
+    K_RIGHT,
+    K_ESCAPE,
+    KEYDOWN,
+    QUIT
+)
 
 pygame.init()
 pygame.mixer.init()
 pygame.display.set_caption("Namu")
 
-WINDOW_SIZE = (500, 500)
-display = pygame.Surface((500, 500))
-screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
+WINDOW_HEIGHT = 500
+WINDOW_WIDTH = 500
+WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
+
+screen = pygame.display.set_mode(WINDOW_SIZE)
 clock = pygame.time.Clock()
 
 pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
@@ -53,7 +60,7 @@ class Namu(pygame.sprite.Sprite):
         self.image = self.sprites[self.current_sprite]
 
         self.rect = self.image.get_rect()
-        self.rect.topleft = [pos_x, pos_y]
+
 
     def update(self):
         if self.is_animating:
@@ -135,6 +142,7 @@ class NamuMamu(pygame.sprite.Sprite):
 moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
 moving_sprite.add(player)
+
 
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
@@ -306,100 +314,75 @@ def draw_bottom_obstacle(obstacles):
         screen.blit(next_draw, obstacle)
 
 
-def obstacles(top_obstacle, bottom_obstacle):
-    obstacle_list = []
-    for i in top_obstacle:
-
-    top_obstacle.append(bottom_obstacle)
-    return obstacle_list
-
-
-def check_collision(obstacle_list):
-    for obstacle in obstacle_list:
-        if pygame.sprite.collide_rect(player, obstacle):
+def check_collision(obstacles):
+    for obstacle in obstacles:
+        if moving_sprite.colliderect(obstacle):
             return False
     return True
 
 
-def quiz():
-    quiz_menu = pygame_menu.Menu(
-        height=WINDOW_SIZE[1] * 0.5,
-        width=WINDOW_SIZE[0] * 0.5,
-        title="Quiz Time!"
-    )
-    quiz_menu.add_button("hello", print_yo)
-    quiz_menu.add_button("hi", print_yo)
+# main game loop
+def main_game_loop(bg_x_position, sand_x_position, Namu):
+    game_active = True
+    game_running = True
 
-
-def print_yo():
-    print("yo")
-
-
-game_active = True
-game_running = True
-
-while game_running:
-    pygame.time.delay(100)
+    while game_running:
+        pygame.time.delay(100)
 
 
 
-    for event in pygame.event.get():  # catch all the events that are happening right now
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                game_running = False
+        for event in pygame.event.get():  # catch all the events that are happening right now
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    game_running = False
 
-        if event.type == pygame.QUIT:  # Quitting the game
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN:  # Move Namu with space bar
-            if event.type == pygame.K_SPACE:
-                pass
-        if event.type == SPAWN_TIME:
-            obstacle_top.append(get_top_obstacle())
-            obstacle_bottom.append(get_bottom_obstacle())
+            if event.type == pygame.QUIT:  # Quitting the game
+                pygame.quit()
+                sys.exit()
 
-    # Get all the keys currently pressed.
-    pressed_keys = pygame.key.get_pressed()
+            if event.type == SPAWN_TIME:
+                obstacle_top.append(get_top_obstacle())
+                obstacle_bottom.append(get_bottom_obstacle())
 
-    # Update the layer sprite based on user keypresses.
-    player.update()
+        # Get all the keys currently pressed.
+        pressed_keys = pygame.key.get_pressed()
 
-    # Background
-    bg_x_position = move_bg(bg_x_position)
-    sand_x_position = move_sand(sand_x_position)
+        # Update the layer sprite based on user keypresses.
+        player.update()
 
-    # Top Obstacles
-    obstacle_top = move_top_obstacles(obstacle_top)
-    draw_top_obstacle(obstacle_top)
+        # Background
+        bg_x_position = move_bg(bg_x_position)
+        sand_x_position = move_sand(sand_x_position)
 
-    # Bottom Obstacles
-    obstacle_bottom = move_bottom_obstacles(obstacle_bottom)
-    draw_bottom_obstacle(obstacle_bottom)
+        # Top Obstacles
+        obstacle_top = move_top_obstacles(obstacle_top)
+        draw_top_obstacle(obstacle_top)
+
+        # Bottom Obstacles
+        obstacle_bottom = move_bottom_obstacles(obstacle_bottom)
+        draw_bottom_obstacle(obstacle_bottom)
 
 
 
-    if game_active:
-        # image of player
 
-        moving_sprite.draw(screen)
-        moving_sprite.update()
+        if game_active:
+            # image of player
 
-        if check_collision(obstacles):
-            print_yo()
+            moving_sprite.draw(screen)
+            moving_sprite.update()
+            # Game Functions
+            score_display('main_game')
 
-        # Game Functions
-        score_display('main_game')
+        # game over
+        else:
+            score_display('game_over')
+            time.sleep(5)
 
-    # game over
-    else:
-        score_display('game_over')
-        time.sleep(5)
+        pygame.display.update()
+        clock.tick(120)
 
-    pygame.display.update()
-    clock.tick(120)
-
-pygame.quit()
+    pygame.quit()
 
 
-"""if __name__ == '__main__':
-    menu()"""
+if __name__ == '__main__':
+    main_game_loop(bg_x_position,sand_x_position,Namu)
