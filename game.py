@@ -166,7 +166,7 @@ bg_x_position = 0
 
 # ====== OBSTACLES =====================================================================================================
 SPAWN_TIME = pygame.USEREVENT
-pygame.time.set_timer(SPAWN_TIME, 2500)
+pygame.time.set_timer(SPAWN_TIME, 2000)
 
 # TOP Obstacles
 iceberg_1 = pygame.image.load('./assets/iceberg_1.png')
@@ -175,7 +175,7 @@ iceberg_2 = pygame.image.load('./assets/iceberg_2.png')
 iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
 
 obstacle_top = []
-OBSTACLE_HEIGHTS_TOP = [-25, -50, -100, -150]
+OBSTACLE_HEIGHTS_TOP = [-25, -50, -75, -100]
 
 # BOTTOM Obstacles
 
@@ -186,7 +186,7 @@ seaweed_2 = pygame.image.load('./assets/seaweed2.png')
 seaweed_2 = pygame.transform.scale(seaweed_2, (80, 250))
 
 obstacle_bottom = []
-OBSTACLE_HEIGHTS_BOTTOM = [500, 525, 600, 650]
+OBSTACLE_HEIGHTS_BOTTOM = [515, 525, 550, 600]
 
 
 # Game Functions
@@ -246,7 +246,7 @@ def update_score(score, high_score):
 
 
 def move_sand(floor_position):
-    floor_position -= 10
+    floor_position -= 15
     screen.blit(sand_surface, (floor_position, 445))
     screen.blit(sand_surface, (floor_position + 500, 445))
     if floor_position <= - 500:
@@ -276,7 +276,7 @@ def get_top_obstacle():
 
 def move_top_obstacles(obstacles):
     for obstacle in obstacles:
-        obstacle.centerx -= 10
+        obstacle.centerx -= 15
     return obstacles
 
 
@@ -298,7 +298,7 @@ def get_bottom_obstacle():
 
 def move_bottom_obstacles(obstacles):
     for obstacle in obstacles:
-        obstacle.centerx -= 10
+        obstacle.centerx -= 15
     return obstacles
 
 
