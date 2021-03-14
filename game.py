@@ -330,10 +330,12 @@ def print_correct_response(text):
 
 def print_trivia_multilines(text_chunk, start_y_position):
     words_lst = text_chunk.split(" ")
-    space = font.size(' ')[0]
-    max_screen_width = 300
+    word_count = 1
+    if word_count % 11 == 0:
+
     for num, message in enumerate(words_lst):
         print_trivia_lines(message, start_y_position + 22 * num)
+
 
 
 def trivia_display(trivia_questions, trivia_number, score):
@@ -366,7 +368,7 @@ def trivia_display(trivia_questions, trivia_number, score):
                 print_trivia_lines("You're Right!", 275)
                 score += update_score(True)
             else:
-                print_trivia_lines("You're Right!", 275)
+                print_trivia_lines("You're Wrong :(", 275)
 
             pause = False
 
