@@ -14,15 +14,8 @@ import pygame_menu
 import random
 from pygame_functions import *
 from itertools import cycle
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
-    QUIT
-)
+from pygame.locals import (K_UP, K_DOWN, K_LEFT, K_RIGHT, K_ESCAPE, KEYDOWN, QUIT)
+
 
 pygame.init()
 pygame.mixer.init()
@@ -142,7 +135,6 @@ class NamuMamu(pygame.sprite.Sprite):
 moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
 moving_sprite.add(player)
-
 
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
@@ -314,9 +306,17 @@ def draw_bottom_obstacle(obstacles):
         screen.blit(next_draw, obstacle)
 
 
-def check_collision(obstacles):
-    for obstacle in obstacles:
-        if player.colliderect(obstacle):
+def obstacles(top_obstacle, bottom_obstacle):
+    obstacle_list = []
+    for i in top_obstacle:
+
+    top_obstacle.append(bottom_obstacle)
+    return obstacle_list
+
+
+def check_collision(obstacle_list):
+    for obstacle in obstacle_list:
+        if pygame.sprite.collide_rect(player, obstacle):
             return False
     return True
 
@@ -378,12 +378,15 @@ while game_running:
 
 
 
-
     if game_active:
         # image of player
 
         moving_sprite.draw(screen)
         moving_sprite.update()
+
+        if check_collision(obstacles):
+            print_yo()
+
         # Game Functions
         score_display('main_game')
 
