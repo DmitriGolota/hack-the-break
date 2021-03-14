@@ -255,12 +255,12 @@ def print_trivia_question(trivia_question):
 
 
 def trivia_display(trivia_questions, trivia_number):
-    trivia_number += 1
     current_trivia = trivia_questions[trivia_number]
     pause = True
 
     print(current_trivia["question"])
     trivia_print_options(current_trivia["options"])
+    print("Press the KEY of your answer.")
 
     while pause:
         event = pygame.event.wait()
@@ -274,9 +274,7 @@ def trivia_display(trivia_questions, trivia_number):
     print(current_trivia["fact"])
 
     time.sleep(12)
-
-
-
+    return trivia_number
 
 
 # Game Functions
@@ -468,7 +466,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     while game_running:
         pygame.time.delay(100)
 
-        if loop_times % 80 == 0:
+        if loop_times % 60 == 0:
             trivia_display(TRIVIA_Qs(), trivia_num)
             trivia_num += 1
         else:
