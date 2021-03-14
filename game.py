@@ -10,6 +10,7 @@ Mar 13, 2021
 
 
 import pygame
+import pygame_menu
 import sys
 import random
 from pygame_functions import *
@@ -314,13 +315,31 @@ def draw_top_obstacle(obstacles):
         next_draw = next(iceberg_draw)
         screen.blit(next_draw, obstacle)
 
+# Menu Init
+
+
+
+
+
 
 # Main Loop
+
+
 game_active = True
-game_running = True
+game_running = False
+
+def start_game_button():
+    game_running = True
+
+menu = pygame_menu.Menu(300, 400, 'Welcome', theme=pygame_menu.themes.THEME_BLUE)
+
+menu.add_text_input('Name: ', default="Suaveman Namu")
+menu.add_button('Play', start_game_button)
+menu.mainloop(screen)
 
 while game_running:
     pygame.time.delay(100)
+
 
     for event in pygame.event.get():      # catch all the events that are happening right now
         if event.type == KEYDOWN:
