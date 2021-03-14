@@ -343,7 +343,7 @@ def trivia_display(trivia_questions, trivia_number, score):
     screen.blit(TRIVIA_BG(), (50, 50)) # This is working!
 
     # Stuff that isn't working :'(
-    print_trivia_multilines(current_trivia["question"], (80, 80))
+    print_trivia_multilines(current_trivia["question"], 80)
 
     trivia_print_options(current_trivia["options"])
 
