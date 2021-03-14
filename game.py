@@ -192,9 +192,6 @@ bg_2 = scale_bg(pygame.image.load('./assets/bg_2.png').convert())
 backgrounds = [bg_1, bg1_to_bg2, bg_2]
 backgrounds = [pygame.transform.scale(background, (512, 512)) for background in backgrounds]
 
-main_bg = pygame.image.load("./assets/namu_logo.png")
-main_bg = pygame.transform.scale(main_bg, (512, 512))
-
 
 bg_x_position = 0
 
@@ -230,11 +227,26 @@ def BOTTOM_OBS1():
 
 # ====================== Quiz Function =================================================================================
 
+TRIVIA_TIME = pygame.USEREVENT
+pygame.time.set_timer(TRIVIA_TIME, 5000)
+
+def START_TRIVIA_Q():
+    return 0
+
+
 def TRIVIA_Qs():
     questions = [{"question": "How many different species of fish exist in the Ocean?",
                   "options": ["15_000", "32_000", "40_000", "23_000"],
                   "answer": 2, "fact": "32 000! This is greater than the total of all other "
-                                       "vertebrate species (amphibians, reptiles, birds, and mammals) combined."}]
+                                       "vertebrate species (amphibians, reptiles, birds, and mammals) combined."},
+                 {"question": "The Ocean contributes to: ",
+                  "options": ["Producing Oxygen and storing Carbon Dioxide",
+                              "Regulating weather and climate",
+                              "Nutrient-rich food chains",
+                              "All the above"],
+                  "answer": 4, "fact": "All the above. The Ocean is thus essential to life on "
+                                       "Earth from producing 50-80% of the Oxygen we breath, "
+                                       "regulating the seasons, and sustaining food chains on and off land."}]
     return questions
 
 
@@ -242,6 +254,9 @@ def trivia_print_options(option_lst):
     for number, option in enumerate(option_lst, 1):
         print(f"[{number}]  {option}")
 
+
+def print_trivia_question(trivia_question):
+    pass
 
 def trivia_display(trivia_questions, trivia_number):
     trivia_number += 1
@@ -251,11 +266,11 @@ def trivia_display(trivia_questions, trivia_number):
     while pause:
         print(current_trivia.key["question"])
         trivia_print_options(current_trivia.key["options"])
-
-
-
+        pass
 
 # Game Functions
+
+
 def generate_random_question():
     questions_to_be_asked = {
         "How many different species of fish exist in the Ocean?":
@@ -448,8 +463,13 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
                 pygame.quit()
                 sys.exit()
 
+            if event.type == TRIVIA_TIME:
+                print("It's Trivia Time!!")
+                pygame.time.delay(20000)
+
             if event.type == SPAWN_TIME:
                 obstacle_lst.extend(get_obstacles(TOP_OBS1(), BOTTOM_OBS1()))
+                print("It's Obstacle Time")
 
         # Get all the keys currently pressed.
 
