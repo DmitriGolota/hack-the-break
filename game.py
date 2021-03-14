@@ -235,8 +235,8 @@ def TRIVIA_Qs():
         {"question": "How many different species of fish exist in the Ocean?",
          "options": ["15_000", "40_000", "32_000", "23_000"],
          "answer": "3",
-         "fact": "32 000! This is greater than the total of all other vertebrate species "
-                 "(amphibians, reptiles, birds, and mammals) combined."},
+         "fact": "32 000! This is greater than the total of *all other vertebrate species *"
+                 "(amphibians, reptiles, birds, and mammals)* combined."},
 
         {"question": "The Ocean contributes to: ",
          "options": ["Producing Oxygen and storing Carbon Dioxide",
@@ -244,11 +244,11 @@ def TRIVIA_Qs():
                      "Nutrient-rich food chains",
                      "All the above"],
          "answer": "4",
-         "fact": "All the above. The Ocean is thus essential to life on "
-                 "Earth from producing 50-80% of the Oxygen we breath, "
-                 "regulating the seasons, and sustaining food chains on and off land."},
+         "fact": "All the above. *The Ocean is thus essential to life on "
+                 "Earth* from producing 50-80% of the Oxygen we breath,* "
+                 "regulating the seasons, to sustaining food* chains on and off land."},
 
-        {"question": "How much of the Ocean have humans been \n able to map, explore, and observe?",
+        {"question": "How much of the Ocean have humans been* able to map, explore, and observe?",
          "options": ["20%", "35%", "55%", "we've mapped it all, of course!"],
          "answer": "1",
          "fact": "Roughly 20%. The Ocean covers 70% of our planet's surface, "
@@ -311,6 +311,7 @@ def get_color(self):
     else:
         return 69, 123, 157 #soft blue
 
+
 def trivia_print_options(option_lst):
     first_option_loc = (110, 110)
     for num, item in enumerate(option_lst, 1):
@@ -323,19 +324,17 @@ def print_trivia_lines(text, y_position):
     surface = font.render(text, True, (0, 0, 255))
     screen.blit(surface, (80, y_position))
 
+
 def print_correct_response(text):
     font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
     text_option = font.render(text, True, (0, 0, 0))
     screen.blit(text_option, [100, 350])
 
+
 def print_trivia_multilines(text_chunk, start_y_position):
-    words_lst = text_chunk.split(" ")
-    word_count = 1
-    if word_count % 11 == 0:
-
-    for num, message in enumerate(words_lst):
-        print_trivia_lines(message, start_y_position + 22 * num)
-
+    words_lst = text_chunk.split("*")
+    for num, line in enumerate(words_lst):
+        print_trivia_lines(line, start_y_position + 20 * num)
 
 
 def trivia_display(trivia_questions, trivia_number, score):
@@ -344,9 +343,7 @@ def trivia_display(trivia_questions, trivia_number, score):
     screen.blit(TRIVIA_BG(), (50, 50)) # This is working!
 
     # Stuff that isn't working :'(
-    large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
-    text_surf = large_text.render(current_trivia["question"], True, (0, 0, 2))
-    screen.blit(text_surf, [80, 80])
+    print_trivia_multilines(current_trivia["question"], (80, 80))
 
     trivia_print_options(current_trivia["options"])
 
@@ -373,6 +370,7 @@ def trivia_display(trivia_questions, trivia_number, score):
             pause = False
 
     print(current_trivia["fact"])
+    print_trivia_multilines(current_trivia["fact"], 300)
     pygame.display.update()
 
     time.sleep(8)
