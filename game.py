@@ -320,8 +320,10 @@ def trivia_print_options(option_lst):
         screen.blit(option_surf, [first_option_loc[0], first_option_loc[1] + 30 * num])
 
 
-def print_trivia_question(trivia_question):
-    pass
+def print_trivia_question(text):
+    font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
+    text_option = font.render(text, True, (0, 0, 0))
+    screen.blit(text_option, [100, 350])
 
 
 def trivia_display(trivia_questions, trivia_number, score):
@@ -359,9 +361,11 @@ def trivia_display(trivia_questions, trivia_number, score):
         if event.type == KEYDOWN:
             if event.key == pygame.key.key_code(current_trivia["answer"]):
                 print("You're right! (+100 points)")
+                print_trivia_question("You're right! (+100 points)")
                 score += update_score(True)
             else:
                 print("You're Wrong :(")
+                print_trivia_question("You're Wrong :(")
 
             pause = False
 
