@@ -175,12 +175,19 @@ sand_surface = pygame.transform.scale(sand_surface, (512, 56))
 sand_x_position = 0
 
 # Background_Image
-bg_1 = pygame.image.load('./assets/bg_1.png').convert()
-bg_1 = pygame.transform.scale(bg_1, (512, 512))
-bg1_to_bg2 = pygame.image.load('./assets/bg1_bg2.png').convert()
-bg1_to_bg2 = pygame.transform.scale(bg1_to_bg2, (512, 512))
-bg_2 = pygame.image.load('./assets/bg_2.png').convert()
-bg_2 = pygame.transform.scale(bg_2, (512, 512))
+
+
+def scale_bg(background_image):
+    """Scales backgrounds of 32px x 32px proportionally"""
+    return pygame.transform.scale(background_image, (512, 512))
+
+
+main_bg = scale_bg(pygame.image.load('./assets/main_bg.png').convert())
+
+bg_1 = scale_bg(pygame.image.load('./assets/bg_1.png').convert())
+bg1_to_bg2 = scale_bg(pygame.image.load('./assets/bg1_bg2.png').convert())
+bg_2 = scale_bg(pygame.image.load('./assets/bg_2.png').convert())
+
 
 backgrounds = [bg_1, bg1_to_bg2, bg_2]
 backgrounds = [pygame.transform.scale(background, (512, 512)) for background in backgrounds]
@@ -221,7 +228,31 @@ def BOTTOM_OBS1():
     return [scale_obstacle(seaweed) for seaweed in [pygame.image.load('./assets/seaweed1.png'),
                                                     pygame.image.load('./assets/seaweed2.png')]]
 
-# ======================================================================================================================
+# ====================== Quiz Function =================================================================================
+
+def TRIVIA_Qs():
+    questions = [{"question": "How many different species of fish exist in the Ocean?",
+                  "options": ["15_000", "32_000", "40_000", "23_000"],
+                  "answer": 2, "fact": "32 000! This is greater than the total of all other "
+                                       "vertebrate species (amphibians, reptiles, birds, and mammals) combined."}]
+    return questions
+
+
+def trivia_print_options(option_lst):
+    for number, option in enumerate(option_lst, 1):
+        print(f"[{number}]  {option}")
+
+
+def trivia_display(trivia_questions, trivia_number):
+    trivia_number += 1
+    current_trivia = trivia_questions[trivia_number]
+    pause = True
+
+    while pause:
+        print(current_trivia.key["question"])
+        trivia_print_options(current_trivia.key["options"])
+
+
 
 
 # Game Functions
@@ -334,7 +365,7 @@ def draw_obstacles(obstacles_lst, top_obs_collection, bottom_obs_collection):
 # ====================== Collision Functions ===========================================================================
 
 
-def check_collision(obstacles):
+def check_collision(obstacles, moving_sprite):
     for obstacle in obstacles:
         if moving_sprite.colliderect(obstacle):
             return False
@@ -359,6 +390,11 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     screen.blit(textSurf, textRect)
 
 
+# ====================== Quiz Function =================================================================================
+
+
+
+
 # ======================================================================================================================
 #                                               MAIN GAME LOOP
 # ======================================================================================================================
@@ -380,7 +416,7 @@ def game_intro():
 
         main_logo = pygame.image.load("./assets/namu_logo.png")
         main_logo = pygame.transform.scale(main_logo, (180*2, 100*2))
-        screen.blit(bg_1, (0, 0))
+        screen.blit(main_bg, (0, 0))
         screen.blit(main_logo, (75, 50))
         large_text = pygame.font.SysFont('timesnewromanbold', 20)
         TextSurf, TextRect = text_objects("", large_text)
