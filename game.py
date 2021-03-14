@@ -227,8 +227,6 @@ def BOTTOM_OBS1():
 
 # ====================== Quiz Function =================================================================================
 
-TRIVIA_TIME = pygame.USEREVENT
-pygame.time.set_timer(TRIVIA_TIME, 5000)
 
 def START_TRIVIA_Q():
     return 0
@@ -257,6 +255,7 @@ def trivia_print_options(option_lst):
 
 def print_trivia_question(trivia_question):
     pass
+
 
 def trivia_display(trivia_questions, trivia_number):
     trivia_number += 1
@@ -434,8 +433,8 @@ def game_intro():
         screen.blit(main_bg, (0, 0))
         screen.blit(main_logo, (75, 50))
         large_text = pygame.font.SysFont('timesnewromanbold', 20)
-        TextSurf, TextRect = text_objects("", large_text)
-        TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT / 2))
+        TextSurf, TextRect = text_objects("created by: Chansaa, Dmitri, Marti, Subin, & Sally", large_text)
+        TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT -100))
         screen.blit(TextSurf, TextRect)
 
         button("GO", 100, 300, 100, 50, 'white', 'lightblue', main_game_tester)
@@ -450,6 +449,7 @@ def main_game_tester():
 def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_active = True
     game_running = True
+    loop_times = 0
 
     while game_running:
         pygame.time.delay(100)
@@ -462,10 +462,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
             if event.type == pygame.QUIT:  # Quitting the game
                 pygame.quit()
                 sys.exit()
-
-            if event.type == TRIVIA_TIME:
-                print("It's Trivia Time!!")
-                pygame.time.delay(20000)
 
             if event.type == SPAWN_TIME:
                 obstacle_lst.extend(get_obstacles(TOP_OBS1(), BOTTOM_OBS1()))
@@ -490,9 +486,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
             moving_sprite.draw(screen)
             moving_sprite.update()
 
-            if check_collision(obstacle_lst, player):
-                print('yo')
-
             # Game Functions
             score_display('main_game')
 
@@ -503,6 +496,8 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
         pygame.display.update()
         clock.tick(120)
+        loop_times += 1
+        print(loop_times)
 
     pygame.quit()
 
