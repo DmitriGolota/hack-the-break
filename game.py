@@ -317,8 +317,17 @@ def check_collision(obstacles):
 
 
 def quiz():
-    pass
+    quiz_menu = pygame_menu.Menu(
+        height=WINDOW_SIZE[1] * 0.5,
+        width=WINDOW_SIZE[0] * 0.5,
+        title="Quiz Time!"
+    )
+    quiz_menu.add_button("hello", print_yo)
+    quiz_menu.add_button("hi", print_yo)
 
+
+def print_yo():
+    print("yo")
 
 """# Menu Init
 #def menu():
@@ -373,6 +382,7 @@ while game_running:
     # Bottom Obstacles
     obstacle_bottom = move_bottom_obstacles(obstacle_bottom)
     draw_bottom_obstacle(obstacle_bottom)
+
 
 
 
