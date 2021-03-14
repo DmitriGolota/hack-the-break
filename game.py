@@ -37,8 +37,9 @@ WINDOW_SIZE = (500, 500)
 display = pygame.Surface((500, 500))
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
-#pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
-#pygame.mixer.music.play(loops=-1)
+
+pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
+pygame.mixer.music.play(loops=-1)
 
 # Game Classes
 
@@ -370,79 +371,62 @@ def draw_top_obstacle(obstacles):
 
 # Menu Init
 
-
-
-
-
-
 # Main Loop
 
-
 game_active = True
-game_running = False
+game_running = True
 
-def start_game_button():
-    game_running = True
+while game_running:
+    pygame.time.delay(100)
 
-menu = pygame_menu.Menu(300, 400, 'Welcome', theme=pygame_menu.themes.THEME_BLUE)
+    for event in pygame.event.get():      # catch all the events that are happening right now
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                game_running = False
 
-menu.add_text_input('Name: ', default="Suaveman Namu")
-menu.add_button('Play', start_game_button)
-menu.mainloop(screen)
+        if event.type == pygame.QUIT: # Quitting the game
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN: # Move Namu with space bar
+            if event.type == pygame.K_SPACE:
+                pass
+        if event.type == SPAWN_TOP:
+            obstacle_top.append(get_top_obstacle())
+            print(obstacle_top)
 
-def main_game_start():
-    while game_running:
-        pygame.time.delay(100)
+    # Get all the keys currently pressed.
+    pressed_keys = pygame.key.get_pressed()
 
-
-        for event in pygame.event.get():      # catch all the events that are happening right now
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    game_running = False
-
-            if event.type == pygame.QUIT: # Quitting the game
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN: # Move Namu with space bar
-                if event.type == pygame.K_SPACE:
-                    pass
-            if event.type == SPAWN_TOP:
-                obstacle_top.append(get_top_obstacle())
-                print(obstacle_top)
-
-        # Get all the keys currently pressed.
-        pressed_keys = pygame.key.get_pressed()
-
-        # Update the layer sprite based on user keypresses.
-        player.update()
+    # Update the layer sprite based on user keypresses.
+    player.update()
 
 
-        # Background
-        bg_x_position = move_bg(bg_x_position)
-        sand_x_position = move_sand(sand_x_position)
+    # Background
+    bg_x_position = move_bg(bg_x_position)
+    sand_x_position = move_sand(sand_x_position)
 
-        # Top Obstacles
-        obstacle_top = move_top_obstacles(obstacle_top)
-        draw_top_obstacle(obstacle_top)
-
-
-        if game_active:
-            # image of player
-
-            moving_sprite.draw(screen)
-            moving_sprite.update()
+    # Top Obstacles
+    obstacle_top = move_top_obstacles(obstacle_top)
+    draw_top_obstacle(obstacle_top)
 
 
-            # Game Functions
-            score_display('main_game')
+    if game_active:
+        # image of player
 
-        # game over
-        else:
-            score_display('game_over')
-            time.sleep(5)
-
-        pygame.display.update()
-        clock.tick(120)
+        moving_sprite.draw(screen)
+        moving_sprite.update()
 
 
-    pygame.quit()
+        # Game Functions
+        score_display('main_game')
+
+    # game over
+    else:
+        score_display('game_over')
+        time.sleep(5)
+
+    pygame.display.update()
+    clock.tick(120)
+
+
+pygame.quit()
