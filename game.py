@@ -70,7 +70,7 @@ class Namu(pygame.sprite.Sprite):
                 self.current_sprite = 0
 
             self.image = self.sprites[self.current_sprite]
-
+        pressed_keys = pygame.key.get_pressed()
         # Move the sprite based on user keypresses.
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
@@ -322,7 +322,7 @@ def check_collision(obstacles):
 
 
 # main game loop
-def main_game_loop(bg_x_position, sand_x_position, Namu):
+def main_game_loop(bg_x_position, sand_x_position, obstacle_top, obstacle_bottom):
     game_active = True
     game_running = True
 
@@ -345,7 +345,6 @@ def main_game_loop(bg_x_position, sand_x_position, Namu):
                 obstacle_bottom.append(get_bottom_obstacle())
 
         # Get all the keys currently pressed.
-        pressed_keys = pygame.key.get_pressed()
 
         # Update the layer sprite based on user keypresses.
         player.update()
@@ -385,4 +384,4 @@ def main_game_loop(bg_x_position, sand_x_position, Namu):
 
 
 if __name__ == '__main__':
-    main_game_loop(bg_x_position,sand_x_position,Namu)
+    main_game_loop(bg_x_position,sand_x_position, obstacle_top, obstacle_bottom)
