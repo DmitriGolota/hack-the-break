@@ -510,8 +510,9 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
         # game over
         else:
+            screen.fill("white")
             score_display('game_over')
-            time.sleep(5)
+            time.sleep(10)
 
         pygame.display.update()
         clock.tick(120)
