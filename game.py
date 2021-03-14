@@ -214,10 +214,10 @@ iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
 
 iceberg_rect = cycle([iceberg_1, iceberg_2])
 
-
 obstacle_top = []
 SPAWN_TOP = pygame.USEREVENT
 pygame.time.set_timer(SPAWN_TOP, 2500)
+OBSTACLE_HEIGHTS_TOP = [0, -50, -100, -150]
 
 
 # Game Functions
@@ -298,7 +298,7 @@ def move_bg(bg_position):
 
 def get_top_obstacle():
     next_obstacle = next(iceberg_rect)
-    new_obstacle = next_obstacle.get_rect(midtop=(520, 0))
+    new_obstacle = next_obstacle.get_rect(midtop=(600, random.choice(OBSTACLE_HEIGHTS_TOP)))
     return new_obstacle
 
 
