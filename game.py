@@ -364,7 +364,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
 # ======================================================================================================================
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, 'white')
+    textSurface = font.render(text, True, 'navyblue')
     return textSurface, textSurface.get_rect()
 
 def game_intro():
@@ -378,7 +378,7 @@ def game_intro():
                 pygame.quit()
                 quit()
 
-        screen.fill('navyblue')
+        screen.blit(bg_1, (0, 0))
         large_text = pygame.font.SysFont('timesnewromanbold', 20)
         TextSurf, TextRect = text_objects("Suavemans Namu, u rdy to vibe?", large_text)
         TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT / 2))
