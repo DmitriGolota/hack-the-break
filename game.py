@@ -315,14 +315,22 @@ def get_color(self):
 def trivia_print_options(option_lst):
     first_option_loc = (110, 110)
     for num, item in enumerate(option_lst, 1):
-        print_trivia_lines(f"{num} - {item}", first_option_loc[1] + 30 * num)
-    print_trivia_lines(f"Press the KEY of your answer.", 260)
+        print_trivia_lines(f"{num} - {item}", first_option_loc[1] + 25 * num)
+    print_trivia_lines(f"Press the KEY of your answer.", 250)
 
 
 def print_trivia_lines(text, y_position):
     font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
     surface = font.render(text, True, (0, 0, 255))
     screen.blit(surface, (80, y_position))
+
+
+def print_trivia_multilines(text_chunk, start_y_position):
+    words_lst = text_chunk.split(" ")
+    space = font.size(' ')[0]
+    max_screen_width = 300
+    for num, message in enumerate(words_lst):
+        print_trivia_lines(message, start_y_position + 22 * num)
 
 
 def trivia_display(trivia_questions, trivia_number, score):
@@ -332,14 +340,7 @@ def trivia_display(trivia_questions, trivia_number, score):
 
     # Stuff that isn't working :'(
     large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
-    """text_surf, text_rect = text_objects(current_trivia["question"], large_text.get_rect())
-    text_rect.topleft = (100, 100)
-    screen.blit(text_surf, text_rect)
-    text_surf, text_rect = text_objects(current_trivia["question"], large_text)"""
-    """text_rect.topleft = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 100))
-    screen.blit(text_surf, text_rect)"""
-
-    text_surf = large_text.render(current_trivia["question"], True, (0, 0, 25))
+    text_surf = large_text.render(current_trivia["question"], True, (0, 0, 2))
     screen.blit(text_surf, [80, 80])
 
     trivia_print_options(current_trivia["options"])
@@ -359,10 +360,10 @@ def trivia_display(trivia_questions, trivia_number, score):
         event = pygame.event.wait()
         if event.type == KEYDOWN:
             if event.key == pygame.key.key_code(current_trivia["answer"]):
-                print("You're right! (+100 points)")
+                print_trivia_lines("You're Right!", 275)
                 score += update_score(True)
             else:
-                print("You're Wrong :(")
+                print_trivia_lines("You're Right!", 275)
 
             pause = False
 
