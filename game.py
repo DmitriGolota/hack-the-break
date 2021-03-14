@@ -554,7 +554,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         obstacle_lst = move_obstacles(obstacle_lst)
         draw_obstacles(obstacle_lst, TOP_OBS1(), BOTTOM_OBS1())
 
-        if trivia_num < (len(TRIVIA_Qs())) and loop_times % 80 == 0:
+        if trivia_num < (len(TRIVIA_Qs())) and loop_times % 100 == 0:
             score = trivia_display(TRIVIA_Qs(), trivia_num, score)
             trivia_num += 1
 
