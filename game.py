@@ -15,6 +15,7 @@ import pygame_menu
 import sys
 import random
 from pygame_functions import *
+from pygame.locals import *
 import time
 from itertools import cycle
 
@@ -149,17 +150,13 @@ class menu():
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = -100
-        self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-
-    def draw_text(self, text, size, x, y):
-        font = pygame.font.Font('./assets/Fipps_font.otf', size)
-        text_surface = font.render(text, True, (255, 255, 255))
-        text_rect = text_surface.get_rect()
-        text_rect.center = (x, y)
-        screen.blit(text_surface, text_rect)
 
     def draw_cursor(self):
-        self.draw_text('*', 15, self.cursor_rect.x, self.cursor_rect.y)
+        font = pygame.font.Font(',/assets/Fipps_font.otf', 50)
+        text_surface = font.render('*', True, (255, 255, 255))
+        text_rect = text_surface.get_rect()
+        text_rect.center = (self.cursor_rect.x, self.cursor_rect.y)
+        screen.blit(text_surface, text_rect)
 
     def blit_screen(self):
         screen.blit(display, (0, 0))
@@ -267,12 +264,12 @@ iceberg_1 = pygame.transform.scale(iceberg_1, (80, 250))
 iceberg_2 = pygame.image.load('./assets/iceberg_2.png')
 iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
 
-iceberg_rect = cycle([iceberg_1, iceberg_2])
+
 
 obstacle_top = []
 SPAWN_TOP = pygame.USEREVENT
 pygame.time.set_timer(SPAWN_TOP, 2500)
-OBSTACLE_HEIGHTS_TOP = [0, -50, -100, -150]
+OBSTACLE_HEIGHTS_TOP = [-25, -50, -100, -150]
 
 
 # Game Functions
@@ -352,6 +349,7 @@ def move_bg(bg_position):
 
 
 def get_top_obstacle():
+    iceberg_rect = cycle([iceberg_1, iceberg_2])
     next_obstacle = next(iceberg_rect)
     new_obstacle = next_obstacle.get_rect(midtop=(600, random.choice(OBSTACLE_HEIGHTS_TOP)))
     return new_obstacle
@@ -392,7 +390,6 @@ while game_running:
                 pass
         if event.type == SPAWN_TOP:
             obstacle_top.append(get_top_obstacle())
-            print(obstacle_top)
 
     # Get all the keys currently pressed.
     pressed_keys = pygame.key.get_pressed()
