@@ -11,13 +11,9 @@ Mar 13, 2021
 
 import pygame
 import pygame_menu
-import sys
 import random
 from pygame_functions import *
-from pygame.locals import *
-import time
 from itertools import cycle
-
 from pygame.locals import (
     K_UP,
     K_DOWN,
@@ -25,7 +21,7 @@ from pygame.locals import (
     K_RIGHT,
     K_ESCAPE,
     KEYDOWN,
-    QUIT,
+    QUIT
 )
 
 pygame.init()
@@ -140,93 +136,13 @@ class NamuMamu(pygame.sprite.Sprite):
             self.image = self.sprites[self.current_sprite]
 
 
-class menu():
-    def __init__(self):
-        self.mid_w, self.mid_h = 250, 250
-        self.run_display = True
-        self.cursor_rect = pygame.Rect(0, 0, 20, 20)
-        self.offset = -100
+# class test
 
-    def draw_cursor(self):
-        font = pygame.font.Font(',/assets/Fipps_font.otf', 50)
-        text_surface = font.render('*', True, (255, 255, 255))
-        text_rect = text_surface.get_rect()
-        text_rect.center = (self.cursor_rect.x, self.cursor_rect.y)
-        screen.blit(text_surface, text_rect)
-
-    def blit_screen(self):
-        screen.blit(display, (0, 0))
-        pygame.display.update()
-        self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-
-
-class main_menu(menu):
-    def __init__(self):
-        menu.__init__(self)
-        self.game_running, self.game_active = True, True
-        self.state = 'Start'
-        self.startx, self.starty = self.mid_w, self.mid_h + 30
-        self.quitx, self.quity = self.mid_w, self.mid_h + 50
-        self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
-
-    def check_event(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.game_running, self.game_active = False, False
-                self.run_display = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.START_KEY = True
-                if event.key == pygame.K_BACKSPACE:
-                    self.BACK_KEY = True
-                if event.key == pygame.K_DOWN:
-                    self.DOWN_KEY = True
-                if event.key == pygame.K_UP:
-                    self.UP_KEY = True
-
-    def move_cursor(self):
-        if self.DOWN_KEY:
-            if self.state == 'Start':
-                self.cursor_rect.midtop = (self.quitx + self.offset, self.quity)
-                self.state = 'Quit'
-            if self.state == 'Quit':
-                self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
-                self.state = 'Start'
-        elif self.UP_KEY:
-            if self.state == 'Start':
-                self.cursor_rect.midtop = (self.quitx + self.offset, self.quity)
-                self.state = 'Quit'
-            elif self.state == 'Quit':
-                self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
-                self.state = 'Start'
-
-    def check_input(self):
-        self.move_cursor()
-        if self.START_KEY:
-            if self.state == 'Start':
-                self.game_running = True
-            elif self.state == 'Quit':
-                self.game_running = False
-
-    def display_menu(self):
-        self.run_display = True
-        while self.run_display:
-            self.check_event()
-            self.check_input()
-            display.fill((0, 0, 0))
-            self.draw_text('Main Menu', 20, WINDOW_SIZE[0] / 2, WINDOW_SIZE[1] / 2 - 20)
-            self.draw_text("Start Game", 20, self.startx, self.starty)
-            self.draw_text('Quit Game', 20, self.quitx, self.quity)
-            self.draw_cursor()
-            self.blit_screen()
-
-
-# TESTEESTEST
-
-
+# Namu class test
 moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
-moving_sprite.add(player)
+player_rect = player.get_rect(center=(100, 100))
+moving_sprite.add(player_rect)
 
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
@@ -356,8 +272,17 @@ def draw_top_obstacle(obstacles):
         next_draw = next(iceberg_draw)
         screen.blit(next_draw, obstacle)
 
-def start_the_game():
-    game_run()
+
+def check_collision(obstacles):
+    for obstacle in obstacles:
+        if player_rect.colliderect(obstacle):
+            return False
+    return True
+
+
+def quiz():
+    pass
+
 
 """# Menu Init
 #def menu():
@@ -464,11 +389,15 @@ pygame.quit()
         obstacle_top = move_top_obstacles(obstacle_top)
         draw_top_obstacle(obstacle_top)
 
+        # Total Obstacles
+        obstacles = []
+
         if game_active:
             # image of player
-
             moving_sprite.draw(screen)
             moving_sprite.update()
+            if check_collision(obstacles):
+                quiz()
 
             # Game Functions
             score_display('main_game')
