@@ -232,16 +232,16 @@ def START_TRIVIA_Q():
 def TRIVIA_Qs():
     questions = [{"question": "How many different species of fish exist in the Ocean?",
                   "options": ["15_000", "32_000", "40_000", "23_000"],
-                  "answer": "K_2", "fact": "32 000! This is greater than the total of all other "
-                                           "vertebrate species (amphibians, reptiles, birds, and mammals) combined."},
+                  "answer": "2", "fact": "32 000! This is greater than the total of all other "
+                                         "vertebrate species (amphibians, reptiles, birds, and mammals) combined."},
                  {"question": "The Ocean contributes to: ",
                   "options": ["Producing Oxygen and storing Carbon Dioxide",
                               "Regulating weather and climate",
                               "Nutrient-rich food chains",
                               "All the above"],
-                  "answer": 4, "fact": "All the above. The Ocean is thus essential to life on "
-                                       "Earth from producing 50-80% of the Oxygen we breath, "
-                                       "regulating the seasons, and sustaining food chains on and off land."}]
+                  "answer": "4", "fact": "All the above. The Ocean is thus essential to life on "
+                                         "Earth from producing 50-80% of the Oxygen we breath, "
+                                         "regulating the seasons, and sustaining food chains on and off land."}]
     return questions
 
 
@@ -259,23 +259,22 @@ def trivia_display(trivia_questions, trivia_number):
     current_trivia = trivia_questions[trivia_number]
     pause = True
 
+    print(current_trivia["question"])
+    trivia_print_options(current_trivia["options"])
+
     while pause:
-        for event in pygame.event.get():
-            print(current_trivia["question"])
-            trivia_print_options(current_trivia["options"])
-            if event.type == KEYDOWN and pygame.key.key_code(str(current_trivia["answer"])):
+        event = pygame.event.wait()
+        if event.type == KEYDOWN:
+            if event.key == pygame.key.key_code(current_trivia["answer"]):
                 print("You're right!")
-
-            if event.type == KEYDOWN:
-                print("You're Wrong.")
-
-        pause = False
-
-    time.sleep(2)
+            else:
+                print("You're Wrong :(")
+            pause = False
 
     print(current_trivia["fact"])
 
-    time.sleep(20)
+    time.sleep(12)
+
 
 
 
