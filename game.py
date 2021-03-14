@@ -32,7 +32,7 @@ screen = pygame.display.set_mode(WINDOW_SIZE)
 clock = pygame.time.Clock()
 
 music = ["./assets/sounds/NAMU-1.mp3", "./assets/sounds/NAMU-2.mp3", "./assets/sounds/NAMU-3.mp3"]
-pygame.mixer.music.load(music[random.randint(0, 2)])
+pygame.mixer.music.load(music[0)])
 pygame.mixer.music.play(loops=-1)
 
 
