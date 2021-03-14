@@ -156,9 +156,6 @@ player = Namu(100, 100)
 moving_sprite.add(player)
 
 
-final_check = NamuMamu(600, 500)
-moving_sprite.add(final_check)
-
 # Namu class test
 
 
@@ -420,6 +417,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     screen.blit(textSurf, textRect)
 
 
+
 # ====================== Quiz Function =================================================================================
 
 
@@ -519,6 +517,13 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         clock.tick(120)
         loop_times += 1
         print(loop_times)
+
+        # prints namus mom on the screen when condition reached
+        if loop_times == 500:
+            final_spawn = NamuMamu(100, 100)
+            moving_sprite.add(final_spawn)
+
+
 
     pygame.quit()
 
