@@ -423,8 +423,8 @@ def game_intro():
         TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT / 2))
         screen.blit(TextSurf, TextRect)
 
-        button("GO!", 100, 300, 100, 50, 'green', 'blue', main_game_tester)
-        button("Quit", 300, 300, 100, 50, 'red', 'purple', quit)
+        button("GO", 100, 300, 100, 50, 'white', 'lightblue', main_game_tester)
+        button("QUIT", 300, 300, 100, 50, 'white', (255, 100, 100), quit)
 
         pygame.display.update()
         clock.tick(15)
@@ -438,8 +438,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
     while game_running:
         pygame.time.delay(100)
-
-
 
         for event in pygame.event.get():  # catch all the events that are happening right now
             if event.type == KEYDOWN:
