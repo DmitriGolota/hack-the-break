@@ -414,7 +414,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     else:
         pygame.draw.rect(screen, ic,(x,y,w,h))
 
-    smallText = pygame.font.SysFont("comicsansms",20)
+    smallText = pygame.font.SysFont("./assets/Fipps_font.otf", 20)
     textSurf, textRect = text_objects(msg, smallText)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     screen.blit(textSurf, textRect)
@@ -448,7 +448,7 @@ def game_intro():
         main_logo = pygame.transform.scale(main_logo, (180*2, 100*2))
         screen.blit(main_bg, (0, 0))
         screen.blit(main_logo, (75, 50))
-        large_text = pygame.font.SysFont('timesnewromanbold', 20)
+        large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
         TextSurf, TextRect = text_objects("created by: Chansaa, Dmitri, Marti, Subin, & Sally", large_text)
         TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT -100))
         screen.blit(TextSurf, TextRect)
