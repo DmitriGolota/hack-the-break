@@ -8,7 +8,7 @@ Member List
 
 Mar 13, 2021
 """
-
+import time
 import pygame
 import pygame_menu
 import random
@@ -143,6 +143,7 @@ moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
 moving_sprite.add(player)
 
+
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
 
@@ -162,6 +163,8 @@ sand_x_position = 0
 # Background_Image
 bg_1 = pygame.image.load('./assets/bg_1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+main_bg = pygame.image.load("./assets/namu_logo.png")
+main_bg = pygame.transform.scale(main_bg, (512, 512))
 
 
 bg_x_position = 0
@@ -338,6 +341,8 @@ game_running = True
 while game_running:
     pygame.time.delay(100)
 
+
+
     for event in pygame.event.get():  # catch all the events that are happening right now
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
@@ -379,7 +384,6 @@ while game_running:
 
         moving_sprite.draw(screen)
         moving_sprite.update()
-
         # Game Functions
         score_display('main_game')
 
