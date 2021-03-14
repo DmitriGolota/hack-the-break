@@ -221,9 +221,7 @@ class main_menu(menu):
             self.blit_screen()
 
 
-# class test
-
-# Namu class test
+# TESTEESTEST
 
 
 moving_sprite = pygame.sprite.Group()
@@ -358,28 +356,23 @@ def draw_top_obstacle(obstacles):
         next_draw = next(iceberg_draw)
         screen.blit(next_draw, obstacle)
 
+def start_the_game():
+    game_run()
 
 # Menu Init
+def menu():
+    menu = pygame_menu.Menu(
+        height=300,
+        theme=pygame_menu.themes.THEME_BLUE,
+        title='Welcome',
+        width=400
+    )
 
-menu = pygame_menu.Menu(
-    height=300,
-    theme=pygame_menu.themes.THEME_BLUE,
-    title='Welcome',
-    width=400
-)
+    user_name = menu.add_text_input('Name: ', default='John Doe', maxchar=10)
+    menu.add_button('Play', start_the_game)
+    menu.add_button('Quit', pygame_menu.events.EXIT)
 
-game_mode = False
-
-
-def start_the_game():
-    return game_mode == True
-
-
-user_name = menu.add_text_input('Name: ', default='John Doe', maxchar=10)
-menu.add_button('Play', start_the_game)
-menu.add_button('Quit', pygame_menu.events.EXIT)
-
-menu.mainloop(screen)
+    menu.mainloop(screen)
 
 
 # Main Loop
@@ -438,19 +431,5 @@ def game_run():
     pygame.quit()
 
 
-def game():
-    game_mode = False
-
-    def start_the_game():
-        return game_mode == True
-
-    user_name = menu.add_text_input('Name: ', default='John Doe', maxchar=10)
-    menu.add_button('Play', start_the_game)
-    menu.add_button('Quit', pygame_menu.events.EXIT)
-
-    menu.mainloop(screen)
-    if game_mode == True:
-        game_run()
-
 if __name__ == '__main__':
-    game()
+    menu()
