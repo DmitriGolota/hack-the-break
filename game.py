@@ -141,8 +141,7 @@ class NamuMamu(pygame.sprite.Sprite):
 # Namu class test
 moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
-player_rect = player.get_rect(center=(100, 100))
-moving_sprite.add(player_rect)
+moving_sprite.add(player)
 
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
@@ -275,7 +274,7 @@ def draw_top_obstacle(obstacles):
 
 def check_collision(obstacles):
     for obstacle in obstacles:
-        if player_rect.colliderect(obstacle):
+        if player.colliderect(obstacle):
             return False
     return True
 
