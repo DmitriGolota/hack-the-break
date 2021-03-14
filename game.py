@@ -344,7 +344,7 @@ def trivia_display(trivia_questions, trivia_number, score):
     trivia_print_options(current_trivia["options"])
     pygame.display.update()
 
-    time.sleep(3)
+    time.sleep(2)
 
     pause = True
 
@@ -362,8 +362,8 @@ def trivia_display(trivia_questions, trivia_number, score):
     print_trivia_multilines(current_trivia["fact"], 300)
     pygame.display.update()
 
-    time.sleep(8)
-    clock.tick(120)
+    time.sleep(7)
+    clock.tick(60)
     return score
 
 
@@ -524,7 +524,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
             moving_sprite.add(final_spawn)
             trivia_num += 1
 
-        if loop_times == 520:
+        if loop_times == 1000:
             game_active = False
 
         else:
@@ -553,7 +553,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         obstacle_lst = move_obstacles(obstacle_lst)
         draw_obstacles(obstacle_lst, TOP_OBS1(), BOTTOM_OBS1())
 
-        if loop_times % 100 == 0 and trivia_num <= (len(TRIVIA_Qs())):
+        if trivia_num < (len(TRIVIA_Qs())) and loop_times % 80 == 0:
             score = trivia_display(TRIVIA_Qs(), trivia_num, score)
             trivia_num += 1
 
