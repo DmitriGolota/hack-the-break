@@ -160,8 +160,10 @@ sand_surface = pygame.transform.scale(sand_surface, (512, 56))
 sand_x_position = 0
 
 # Background_Image
-bg_1 = pygame.image.load('./assets/bg-1.png').convert()
+bg_1 = pygame.image.load('./assets/bg_1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+
+bg_2 =
 bg_x_position = 0
 
 # ====== OBSTACLES =====================================================================================================
