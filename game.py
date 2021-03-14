@@ -223,8 +223,8 @@ def BOTTOM_OBS1():
 
 # ====================== Quiz Function =================================================================================
 
-def TRIVIA_SCREEN():
-    return
+def TRIVIA_BG():
+    return pygame.transform.scale(pygame.image.load('./assets/trivia_screen.png'), (375, 375))
 
 def START_TRIVIA_Q():
     return 0
@@ -323,14 +323,15 @@ def trivia_display(trivia_questions, trivia_number, score):
     print(current_trivia["question"])
     trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
-
     time.sleep(3)
 
     while pause:
+        screen.blit(TRIVIA_BG(), (250, 250))
+
         event = pygame.event.wait()
         if event.type == KEYDOWN:
             if event.key == pygame.key.key_code(current_trivia["answer"]):
-                print("You're right!")
+                print("You're right! (+100 points)")
                 score += update_score(True)
             else:
                 print("You're Wrong :(")
@@ -340,7 +341,7 @@ def trivia_display(trivia_questions, trivia_number, score):
     print(current_trivia["fact"])
 
     time.sleep(8)
-    clock.tick(5)
+    clock.tick(120)
     return score
 
 
@@ -437,14 +438,8 @@ def button(msg,x,y,w,h,ic,ac,action=None):
 
     smallText = pygame.font.SysFont("./assets/Fipps_font.otf", 20)
     textSurf, textRect = text_objects(msg, smallText)
-    textRect.center = ( (x+(w/2)), (y+(h/2)) )
+    textRect.center = ((x + (w/2)), (y+(h/2)))
     screen.blit(textSurf, textRect)
-
-
-
-# ====================== Quiz Function =================================================================================
-
-
 
 
 # ======================================================================================================================
@@ -481,8 +476,10 @@ def game_intro():
         pygame.display.update()
         clock.tick(15)
 
+
 def main_game_tester():
     main_game_loop(bg_x_position, sand_x_position, obstacle_lst)
+
 
 def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_active = True
@@ -493,10 +490,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
     while game_running:
         pygame.time.delay(100)
-
-        if loop_times % 60 == 0:
-            score = trivia_display(TRIVIA_Qs(), trivia_num, score)
-            trivia_num += 1
 
         # prints Namus mom on the screen when condition reached
         if trivia_num == 8:
@@ -519,7 +512,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
                 if event.type == SPAWN_TIME:
                     obstacle_lst.extend(get_obstacles(TOP_OBS1(), BOTTOM_OBS1()))
-                    print("It's Obstacle Time")
 
         # Get all the keys currently pressed.
 
@@ -533,6 +525,10 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         # Generate New Obstacles
         obstacle_lst = move_obstacles(obstacle_lst)
         draw_obstacles(obstacle_lst, TOP_OBS1(), BOTTOM_OBS1())
+
+        if loop_times % 60 == 0:
+            score = trivia_display(TRIVIA_Qs(), trivia_num, score)
+            trivia_num += 1
 
         if game_active:
             # image of player
@@ -552,7 +548,6 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         pygame.display.update()
         clock.tick(120)
         loop_times += 1
-        print(loop_times)
 
 
     pygame.quit()
