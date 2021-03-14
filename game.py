@@ -5,7 +5,6 @@ Member List
 - Sally Poon
 - Subin Moon
 - Martin Gatchev
-
 Mar 13, 2021
 """
 import time
@@ -249,7 +248,7 @@ def TRIVIA_Qs():
                  "Earth from producing 50-80% of the Oxygen we breath, "
                  "regulating the seasons, and sustaining food chains on and off land."},
 
-        {"question": "How much of the Ocean have humans been able to map, explore, and observe?",
+        {"question": "How much of the Ocean have humans been \n able to map, explore, and observe?",
          "options": ["20%", "35%", "55%", "we've mapped it all, of course!"],
          "answer": "1",
          "fact": "Roughly 20%. The Ocean covers 70% of our planet's surface, "
@@ -307,9 +306,19 @@ def TRIVIA_Qs():
     return questions
 
 
+def get_color(self):
+    if self.hovered:
+        return 29, 53, 87 #deep navy
+    else:
+        return 69, 123, 157 #soft blue
+
 def trivia_print_options(option_lst):
-    for number, option in enumerate(option_lst, 1):
-        print(f"[{number}]  {option}")
+    first_option_loc = (120, 120)
+    for x in range(len(option_lst)):
+        font = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
+        option_surf = font.render(str(x + 1) + " - " + option_lst[x], True, (0, 0, 0))
+        screen.blit(option_surf, [first_option_loc[0], first_option_loc[1] + 30 * x])
+
 
 
 def print_trivia_question(trivia_question):
@@ -323,17 +332,22 @@ def trivia_display(trivia_questions, trivia_number, score):
 
     # Stuff that isn't working :'(
     large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
-    text_surf, text_rect = text_objects(current_trivia["question"], large_text)
+    """text_surf, text_rect = text_objects(current_trivia["question"], large_text.get_rect())
     text_rect.topleft = (100, 100)
     screen.blit(text_surf, text_rect)
-    text_surf, text_rect = text_objects(current_trivia["question"], large_text)
-    text_rect.topleft = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 100))
-    screen.blit(text_surf, text_rect)
+    text_surf, text_rect = text_objects(current_trivia["question"], large_text)"""
+    """text_rect.topleft = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 100))
+    screen.blit(text_surf, text_rect)"""
+
+    text_surf = large_text.render(current_trivia["question"], True, (0, 0, 0))
+    screen.blit(text_surf, [80, 80])
+
 
     pygame.display.update() # need this to update the screen and show all the stuff
 
     trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
+
     time.sleep(3)
 
     pygame.display.update()
