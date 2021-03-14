@@ -72,7 +72,9 @@ class Namu(pygame.sprite.Sprite):
 
             self.image = self.sprites[self.current_sprite]
         pressed_keys = pygame.key.get_pressed()
+
         # Move the sprite based on user keypresses.
+
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
         if pressed_keys[K_DOWN]:
@@ -82,6 +84,15 @@ class Namu(pygame.sprite.Sprite):
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
 
+        # Keep player on the screen
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > WINDOW_WIDTH:
+            self.rect.right = WINDOW_WIDTH
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= WINDOW_HEIGHT:
+            self.rect.bottom = WINDOW_HEIGHT
 
 class NamuMamu(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
@@ -156,6 +167,8 @@ game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
 high_score = 0
 
+# ====== BACKGROUNDS ===================================================================================================
+
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
 sand_surface = pygame.transform.scale(sand_surface, (512, 56))
@@ -164,6 +177,14 @@ sand_x_position = 0
 # Background_Image
 bg_1 = pygame.image.load('./assets/bg_1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+bg1_to_bg2 = pygame.image.load('./assets/bg1_bg2.png').convert()
+bg1_to_bg2 = pygame.transform.scale(bg1_to_bg2, (512, 512))
+bg_2 = pygame.image.load('./assets/bg_2.png').convert()
+bg_2 = pygame.transform.scale(bg_2, (512, 512))
+
+backgrounds = [bg_1, bg1_to_bg2, bg_2]
+backgrounds = [pygame.transform.scale(background, (512, 512)) for background in backgrounds]
+
 main_bg = pygame.image.load("./assets/namu_logo.png")
 main_bg = pygame.transform.scale(main_bg, (512, 512))
 
@@ -320,10 +341,57 @@ def check_collision(obstacles):
     return True
 
 
+def button(msg,x,y,w,h,ic,ac,action=None):
+    mouse = pygame.mouse.get_pos()
+    click = pygame.mouse.get_pressed()
+
+    if x+w > mouse[0] > x and y+h > mouse[1] > y:
+        pygame.draw.rect(screen, ac,(x,y,w,h))
+
+        if click[0] == 1 and action != None:
+            action()
+    else:
+        pygame.draw.rect(screen, ic,(x,y,w,h))
+
+    smallText = pygame.font.SysFont("comicsansms",20)
+    textSurf, textRect = text_objects(msg, smallText)
+    textRect.center = ( (x+(w/2)), (y+(h/2)) )
+    screen.blit(textSurf, textRect)
+
+
 # ======================================================================================================================
 #                                               MAIN GAME LOOP
 # ======================================================================================================================
 
+def text_objects(text, font):
+    textSurface = font.render(text, True, 'white')
+    return textSurface, textSurface.get_rect()
+
+def game_intro():
+
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            # print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        screen.fill('navyblue')
+        large_text = pygame.font.SysFont('timesnewromanbold', 20)
+        TextSurf, TextRect = text_objects("Suavemans Namu, u rdy to vibe?", large_text)
+        TextRect.center = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT / 2))
+        screen.blit(TextSurf, TextRect)
+
+        button("GO!", 100, 300, 100, 50, 'green', 'blue', main_game_tester)
+        button("Quit", 300, 300, 100, 50, 'red', 'purple', quit)
+
+        pygame.display.update()
+        clock.tick(15)
+
+def main_game_tester():
+    main_game_loop(bg_x_position, sand_x_position, obstacle_lst)
 
 def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_active = True
@@ -379,4 +447,5 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
 
 if __name__ == '__main__':
-    main_game_loop(bg_x_position, sand_x_position, obstacle_lst)
+    game_intro()
+    main_game_loop(bg_x_position,sand_x_position, obstacle_lst)
