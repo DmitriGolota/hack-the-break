@@ -15,6 +15,7 @@ import random
 from pygame_functions import *
 from pygame.locals import *
 import time
+from itertools import cycle
 
 
 from pygame.locals import (
@@ -176,13 +177,15 @@ class main_menu(menu):
 
 # Namu class test
 
+
 moving_sprite = pygame.sprite.Group()
 player = Namu(100, 100)
 moving_sprite.add(player)
 
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
-# Namu class test
+
+ # Namu class test
 
 
 
@@ -203,9 +206,18 @@ bg_1 = pygame.image.load('./assets/bg-1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
 bg_x_position = 0
 
-# Obstacles
-obstacle_1 = pygame.image.load('./assets/iceberg.png')
-obstacle_1 = pygame.transform.scale(obstacle_1, (100, 160))
+# TOP Obstacles
+iceberg_1 = pygame.image.load('./assets/iceberg_1.png')
+iceberg_1 = pygame.transform.scale(iceberg_1, (80, 250))
+iceberg_2 = pygame.image.load('./assets/iceberg_2.png')
+iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
+
+iceberg_rect = cycle([iceberg_1, iceberg_2])
+
+
+obstacle_top = []
+SPAWN_TOP = pygame.USEREVENT
+pygame.time.set_timer(SPAWN_TOP, 2500)
 
 
 # Game Functions
@@ -284,6 +296,25 @@ def move_bg(bg_position):
         return bg_position
 
 
+def get_top_obstacle():
+    next_obstacle = next(iceberg_rect)
+    new_obstacle = next_obstacle.get_rect(midtop=(520, 0))
+    return new_obstacle
+
+
+def move_top_obstacles(obstacles):
+    for obstacle in obstacles:
+        obstacle.centerx -= 10
+    return obstacles
+
+
+def draw_top_obstacle(obstacles):
+    iceberg_draw = cycle([iceberg_1, iceberg_2])
+    for obstacle in obstacles:
+        next_draw = next(iceberg_draw)
+        screen.blit(next_draw, obstacle)
+
+
 # Main Loop
 game_active = True
 game_running = True
@@ -302,6 +333,9 @@ while game_running:
         if event.type == pygame.KEYDOWN: # Move Namu with space bar
             if event.type == pygame.K_SPACE:
                 pass
+        if event.type == SPAWN_TOP:
+            obstacle_top.append(get_top_obstacle())
+            print(obstacle_top)
 
     # Get all the keys currently pressed.
     pressed_keys = pygame.key.get_pressed()
@@ -313,12 +347,18 @@ while game_running:
     # Background
     bg_x_position = move_bg(bg_x_position)
     sand_x_position = move_sand(sand_x_position)
-    screen.blit(obstacle_1, (0, 0))
+
+    # Top Obstacles
+    obstacle_top = move_top_obstacles(obstacle_top)
+    draw_top_obstacle(obstacle_top)
+
 
     if game_active:
         # image of player
+
         moving_sprite.draw(screen)
         moving_sprite.update()
+
 
         # Game Functions
         score_display('main_game')
