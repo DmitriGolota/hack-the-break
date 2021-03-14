@@ -488,6 +488,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_running = True
     loop_times = 1
     trivia_num = 0
+    score = 0
 
     while game_running:
         pygame.time.delay(100)
@@ -501,6 +502,10 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         if trivia_num == 8:
             final_spawn = NamuMamu(650, 550)
             moving_sprite.add(final_spawn)
+            trivia_num += 1
+
+        if loop_times == 520:
+            game_active = False
 
         else:
             for event in pygame.event.get():  # catch all the events that are happening right now
