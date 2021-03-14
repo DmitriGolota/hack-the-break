@@ -33,7 +33,8 @@ WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 clock = pygame.time.Clock()
 
-pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
+music = ["./assets/sounds/NAMU-1.mp3","./assets/sounds/NAMU-2.mp3","./assets/sounds/NAMU-3.mp3"]
+pygame.mixer.music.load(music[random.randint(0, 2)])
 pygame.mixer.music.play(loops=-1)
 
 
@@ -155,24 +156,14 @@ game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
 high_score = 0
 
-# ====== BACKGROUNDS ===================================================================================================
-
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
 sand_surface = pygame.transform.scale(sand_surface, (512, 56))
 sand_x_position = 0
 
-# Background_Images
+# Background_Image
 bg_1 = pygame.image.load('./assets/bg_1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
-bg1_to_bg2 = pygame.image.load('./assets/bg1_bg2.png').convert()
-bg1_to_bg2 = pygame.transform.scale(bg1_to_bg2, (512, 512))
-bg_2 = pygame.image.load('./assets/bg_2.png').convert()
-bg_2 = pygame.transform.scale(bg_2, (512, 512))
-
-backgrounds = [bg_1, bg1_to_bg2, bg_2]
-backgrounds = [pygame.transform.scale(background, (512, 512)) for background in backgrounds]
-
 main_bg = pygame.image.load("./assets/namu_logo.png")
 main_bg = pygame.transform.scale(main_bg, (512, 512))
 
@@ -289,6 +280,7 @@ def move_bg(bg_position):
     else:
         return bg_position
 
+# Top Obstacle
 
 # ====================== Obstacle Functions ============================================================================
 
@@ -340,6 +332,8 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     while game_running:
         pygame.time.delay(100)
 
+
+
         for event in pygame.event.get():  # catch all the events that are happening right now
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
@@ -385,4 +379,4 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
 
 
 if __name__ == '__main__':
-    main_game_loop(bg_x_position,sand_x_position, obstacle_lst)
+    main_game_loop(bg_x_position, sand_x_position, obstacle_lst)
