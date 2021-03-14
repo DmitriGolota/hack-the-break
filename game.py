@@ -230,18 +230,37 @@ def START_TRIVIA_Q():
 
 
 def TRIVIA_Qs():
-    questions = [{"question": "How many different species of fish exist in the Ocean?",
-                  "options": ["15_000", "32_000", "40_000", "23_000"],
-                  "answer": "2", "fact": "32 000! This is greater than the total of all other "
-                                         "vertebrate species (amphibians, reptiles, birds, and mammals) combined."},
-                 {"question": "The Ocean contributes to: ",
-                  "options": ["Producing Oxygen and storing Carbon Dioxide",
-                              "Regulating weather and climate",
-                              "Nutrient-rich food chains",
-                              "All the above"],
-                  "answer": "4", "fact": "All the above. The Ocean is thus essential to life on "
-                                         "Earth from producing 50-80% of the Oxygen we breath, "
-                                         "regulating the seasons, and sustaining food chains on and off land."}]
+    questions = [
+        {"question": "How many different species of fish exist in the Ocean?",
+         "options": ["15_000", "32_000", "40_000", "23_000"],
+         "answer": "2",
+         "fact": "32 000! This is greater than the total of all other vertebrate species "
+                 "(amphibians, reptiles, birds, and mammals) combined."},
+
+        {"question": "The Ocean contributes to: ",
+         "options": ["Producing Oxygen and storing Carbon Dioxide",
+                     "Regulating weather and climate",
+                     "Nutrient-rich food chains",
+                     "All the above"],
+         "answer": "4",
+         "fact": "All the above. The Ocean is thus essential to life on "
+                 "Earth from producing 50-80% of the Oxygen we breath, "
+                 "regulating the seasons, and sustaining food chains on and off land."},
+
+        {"question": "How much of the Ocean have humans been able to map, explore, and observe?",
+         "options": ["20%", "35%", "55%", "we've mapped it all, of course!"],
+         "answer": "1",
+         "fact": "Roughly 20%. The Ocean covers 70% of our planet's surface, "
+                 "80% of it still remains unobserved, undiscovered, and unmapped."},
+
+        {"question": "How many species live in the Ocean?",
+         "options": ["360 000", "620 000", "78 300", "I'm not really sure"],
+         "answer": "4",
+         "fact": "Trick question! Scientists have no way of tracking how many species there are in the ocean "
+                 "since the majority of it has yet to be observed. They estimate that there are roughly 91% of "
+                 "species remain undiscovered in the ecosystem; there can be millions of species!"}
+
+                 ]
     return questions
 
 
@@ -262,6 +281,8 @@ def trivia_display(trivia_questions, trivia_number):
     trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
 
+    time.sleep(3)
+
     while pause:
         event = pygame.event.wait()
         if event.type == KEYDOWN:
@@ -273,46 +294,11 @@ def trivia_display(trivia_questions, trivia_number):
 
     print(current_trivia["fact"])
 
-    time.sleep(12)
+    time.sleep(10)
     return trivia_number
 
 
 # Game Functions
-
-
-def generate_random_question():
-    questions_to_be_asked = {
-        "How many different species of fish exist in the Ocean?":
-            [["15_000", "32_000", "40_000", "23_000"],
-             1,
-             "32 000! This is greater than the total of all other \
-            vertebrate species (amphibians, reptiles, birds, and mammals) combined."],
-        "The Ocean contributes to: ":
-            [["Producing Oxygen and storing Carbon Dioxide",
-              "Regulating weather and climate",
-              "Nutrient-rich food chains",
-              "All the above"],
-             3,
-             "All the above. The Ocean is thus essential to life on Earth from producing \
-            50-80% of the Oxygen we breath, regulating the seasons, and sustaining food \
-            chains on and off land."],
-        "How much of the Ocean have humans been able to map, explore, and observe?":
-            [["20%", "35%", "55%", "we've mapped all of it!"],
-             0,
-             "Roughly 20%. The Ocean covers 70% of our planet's surface, 80% of it still \
-            remains unobserved, undiscovered, and unmapped."],
-        "How many species live in the Ocean?":
-            [["78 300", "360 000", "620 000", "I'm not really sure"],
-             3,
-             "Trick question! Scientists have no way of tracking how many species there \
-            are in the ocean since the majority of it has yet to be observed. They \
-            estimate that there are roughly 91% of species remain undiscovered in \
-            the ecosystem; there can be millions of species!"
-             ]
-    }
-    question_for_this_turn = random.choice(questions_to_be_asked.keys())
-    return question_for_this_turn, questions_to_be_asked[question_for_this_turn]
-
 
 def score_display(game_state):
     if game_state == 'main_game':
