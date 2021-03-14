@@ -18,8 +18,7 @@ from pygame.locals import (
     K_LEFT,
     K_RIGHT,
     K_ESCAPE,
-    KEYDOWN,
-    QUIT
+    KEYDOWN
 )
 
 pygame.init()
@@ -33,7 +32,7 @@ WINDOW_SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
 screen = pygame.display.set_mode(WINDOW_SIZE)
 clock = pygame.time.Clock()
 
-music = ["./assets/sounds/NAMU-1.mp3","./assets/sounds/NAMU-2.mp3","./assets/sounds/NAMU-3.mp3"]
+music = ["./assets/sounds/NAMU-1.mp3", "./assets/sounds/NAMU-2.mp3", "./assets/sounds/NAMU-3.mp3"]
 pygame.mixer.music.load(music[random.randint(0, 2)])
 pygame.mixer.music.play(loops=-1)
 
@@ -62,7 +61,6 @@ class Namu(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
 
-
     def update(self):
         if self.is_animating:
             self.current_sprite += 1
@@ -74,7 +72,6 @@ class Namu(pygame.sprite.Sprite):
         pressed_keys = pygame.key.get_pressed()
 
         # Move the sprite based on user keypresses.
-
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -5)
         if pressed_keys[K_DOWN]:
@@ -93,6 +90,7 @@ class Namu(pygame.sprite.Sprite):
             self.rect.top = 0
         if self.rect.bottom >= WINDOW_HEIGHT:
             self.rect.bottom = WINDOW_HEIGHT
+
 
 class NamuMamu(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
@@ -223,8 +221,10 @@ def BOTTOM_OBS1():
 
 # ====================== Quiz Function =================================================================================
 
+
 def TRIVIA_BG():
-    return pygame.transform.scale(pygame.image.load('./assets/trivia_screen.png'), (375, 375))
+    return pygame.transform.scale(pygame.image.load('./assets/trivia_screen.png'), (400, 400))
+
 
 def START_TRIVIA_Q():
     return 0
@@ -259,16 +259,16 @@ def TRIVIA_Qs():
          "options": ["360 000", "620 000", "78 300", "I'm not really sure"],
          "answer": "4",
          "fact": "Trick question! Scientists have no way of tracking how many species there are in the ocean "
-                 "since the majority of it has yet to be observed. They estimate that there are roughly 91% of "
+                 "since the majority of it has yet to be observed. There are roughly 91% of "
                  "species remain undiscovered in the ecosystem; there can be millions of species!"},
 
-        {"question": "Since Algae produces oxygen, all Algae are important to the Ocean ecosystem. "
+        {"question": "Since Algae produces Oxygen, all Algae are important to the Ocean ecosystem. "
                      "The more algae there are, the better!",
          "options": ["True", "False"],
          "answer": "2",
          "fact": "False. While most algae is beneficial, too much algae is not good always good! Without a rich "
                  "ecosystem to consume and break down algae growth, Harmful Algal Blooms can happen. "
-                 "The overwhelming amount of algae depletes the oxygen in the waters and may release toxins "
+                 "These blooms will deplete the oxygen in the waters and may release toxins "
                  "that drive fish away, kill organisms in the area, and cause human/animal sickness."},
 
         {"question": "How much money does the illegal, unreported, and unregulated fishing industry make per year?",
@@ -318,15 +318,29 @@ def print_trivia_question(trivia_question):
 
 def trivia_display(trivia_questions, trivia_number, score):
     current_trivia = trivia_questions[trivia_number]
-    pause = True
 
-    print(current_trivia["question"])
+    screen.blit(TRIVIA_BG(), (50, 50)) # This is working!
+
+    # Stuff that isn't working :'(
+    large_text = pygame.font.SysFont('./assets/Fipps_font.otf', 20)
+    text_surf, text_rect = text_objects(current_trivia["question"], large_text)
+    text_rect.topleft = (100, 100)
+    screen.blit(text_surf, text_rect)
+    text_surf, text_rect = text_objects(current_trivia["question"], large_text)
+    text_rect.topleft = ((WINDOW_WIDTH / 2), (WINDOW_HEIGHT - 100))
+    screen.blit(text_surf, text_rect)
+
+    pygame.display.update() # need this to update the screen and show all the stuff
+
     trivia_print_options(current_trivia["options"])
     print("Press the KEY of your answer.")
     time.sleep(3)
 
+    pygame.display.update()
+
+    pause = True
+
     while pause:
-        screen.blit(TRIVIA_BG(), (250, 250))
 
         event = pygame.event.wait()
         if event.type == KEYDOWN:
@@ -339,6 +353,7 @@ def trivia_display(trivia_questions, trivia_number, score):
             pause = False
 
     print(current_trivia["fact"])
+    pygame.display.update()
 
     time.sleep(8)
     clock.tick(120)
@@ -387,6 +402,7 @@ def move_bg(bg_position):
 # Top Obstacle
 
 # ====================== Obstacle Functions ============================================================================
+
 
 def get_obstacles(top_obs_lst, bottom_obs_lst):
     top_rect = cycle(top_obs_lst)
@@ -526,7 +542,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
         obstacle_lst = move_obstacles(obstacle_lst)
         draw_obstacles(obstacle_lst, TOP_OBS1(), BOTTOM_OBS1())
 
-        if loop_times % 60 == 0:
+        if loop_times % 20 == 0:
             score = trivia_display(TRIVIA_Qs(), trivia_num, score)
             trivia_num += 1
 
