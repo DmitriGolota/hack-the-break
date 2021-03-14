@@ -155,14 +155,24 @@ game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
 high_score = 0
 
+# ====== BACKGROUNDS ===================================================================================================
+
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
 sand_surface = pygame.transform.scale(sand_surface, (512, 56))
 sand_x_position = 0
 
-# Background_Image
+# Background_Images
 bg_1 = pygame.image.load('./assets/bg_1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
+bg1_to_bg2 = pygame.image.load('./assets/bg1_bg2.png').convert()
+bg1_to_bg2 = pygame.transform.scale(bg1_to_bg2, (512, 512))
+bg_2 = pygame.image.load('./assets/bg_2.png').convert()
+bg_2 = pygame.transform.scale(bg_2, (512, 512))
+
+backgrounds = [bg_1, bg1_to_bg2, bg_2]
+backgrounds = [pygame.transform.scale(background, (512, 512)) for background in backgrounds]
+
 main_bg = pygame.image.load("./assets/namu_logo.png")
 main_bg = pygame.transform.scale(main_bg, (512, 512))
 
@@ -173,25 +183,33 @@ bg_x_position = 0
 SPAWN_TIME = pygame.USEREVENT
 pygame.time.set_timer(SPAWN_TIME, 2000)
 
-# TOP Obstacles
-iceberg_1 = pygame.image.load('./assets/iceberg_1.png')
-iceberg_1 = pygame.transform.scale(iceberg_1, (80, 250))
-iceberg_2 = pygame.image.load('./assets/iceberg_2.png')
-iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
 
-obstacle_top = []
+def scale_obstacle(obstacle):
+    obstacle = pygame.transform.scale(obstacle, (80, 250))
+    return obstacle
+
+
+# TOP Obstacles
+obstacle_lst = []
 OBSTACLE_HEIGHTS_TOP = [-25, -50, -75, -100]
+
+
+def TOP_OBS1():
+    return [scale_obstacle(iceberg) for iceberg in [pygame.image.load('./assets/iceberg_1.png'),
+                                                    pygame.image.load('./assets/iceberg_2.png')]]
 
 # BOTTOM Obstacles
 
-seaweed_1 = pygame.image.load('./assets/seaweed1.png')
-seaweed_1 = pygame.transform.scale(seaweed_1, (80, 250))
 
-seaweed_2 = pygame.image.load('./assets/seaweed2.png')
-seaweed_2 = pygame.transform.scale(seaweed_2, (80, 250))
+def OBSTACLE_HEIGHTS_BOTTOM():
+    return [515, 525, 550, 600]
 
-obstacle_bottom = []
-OBSTACLE_HEIGHTS_BOTTOM = [515, 525, 550, 600]
+
+def BOTTOM_OBS1():
+    return [scale_obstacle(seaweed) for seaweed in [pygame.image.load('./assets/seaweed1.png'),
+                                                    pygame.image.load('./assets/seaweed2.png')]]
+
+# ======================================================================================================================
 
 
 # Game Functions
@@ -249,6 +267,8 @@ def update_score(score, high_score):
         high_score = score
     return high_score
 
+# ==================== Background Functions ============================================================================
+
 
 def move_sand(floor_position):
     floor_position -= 15
@@ -269,49 +289,36 @@ def move_bg(bg_position):
     else:
         return bg_position
 
-# Top Obstacle
+
+# ====================== Obstacle Functions ============================================================================
+
+def get_obstacles(top_obs_lst, bottom_obs_lst):
+    top_rect = cycle(top_obs_lst)
+    top_obstacle = next(top_rect).get_rect(midtop=(600, random.choice(OBSTACLE_HEIGHTS_TOP)))
+
+    bottom_rect = cycle(bottom_obs_lst)
+    bottom_obstacle = next(bottom_rect).get_rect(midbottom=(700, random.choice(OBSTACLE_HEIGHTS_BOTTOM())))
+    return bottom_obstacle, top_obstacle
 
 
-def get_top_obstacle():
-    iceberg_rect = cycle([iceberg_1, iceberg_2])
-    next_obstacle = next(iceberg_rect)
-    new_obstacle = next_obstacle.get_rect(midtop=(600, random.choice(OBSTACLE_HEIGHTS_TOP)))
-    return new_obstacle
-
-
-def move_top_obstacles(obstacles):
-    for obstacle in obstacles:
+def move_obstacles(obstacles_lst):
+    for obstacle in obstacles_lst:
         obstacle.centerx -= 15
-    return obstacles
+    return obstacles_lst
 
 
-def draw_top_obstacle(obstacles):
-    iceberg_draw = cycle([iceberg_1, iceberg_2])
-    for obstacle in obstacles:
-        next_draw = next(iceberg_draw)
-        screen.blit(next_draw, obstacle)
+def draw_obstacles(obstacles_lst, top_obs_collection, bottom_obs_collection):
+    bottom_obstacle = cycle(bottom_obs_collection)
+    top_obstacle = cycle(top_obs_collection)
+    for obstacle in obstacles_lst:
+        if obstacle.bottom >= 500:
+            next_draw = next(bottom_obstacle)
+            screen.blit(next_draw, obstacle)
+        else:
+            next_draw = next(top_obstacle)
+            screen.blit(next_draw, obstacle)
 
-
-# Bottom obstacles
-
-def get_bottom_obstacle():
-    seaweed_rect = cycle([seaweed_1, seaweed_2])
-    next_obstacle = next(seaweed_rect)
-    new_obstacle = next_obstacle.get_rect(midbottom=(700, random.choice(OBSTACLE_HEIGHTS_BOTTOM)))
-    return new_obstacle
-
-
-def move_bottom_obstacles(obstacles):
-    for obstacle in obstacles:
-        obstacle.centerx -= 10
-    return obstacles
-
-
-def draw_bottom_obstacle(obstacles):
-    seaweed_draw = cycle([seaweed_1, seaweed_2])
-    for obstacle in obstacles:
-        next_draw = next(seaweed_draw)
-        screen.blit(next_draw, obstacle)
+# ====================== Collision Functions ===========================================================================
 
 
 def check_collision(obstacles):
@@ -321,15 +328,17 @@ def check_collision(obstacles):
     return True
 
 
-# main game loop
-def main_game_loop(bg_x_position, sand_x_position, obstacle_top, obstacle_bottom):
+# ======================================================================================================================
+#                                               MAIN GAME LOOP
+# ======================================================================================================================
+
+
+def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_active = True
     game_running = True
 
     while game_running:
         pygame.time.delay(100)
-
-
 
         for event in pygame.event.get():  # catch all the events that are happening right now
             if event.type == KEYDOWN:
@@ -341,8 +350,7 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_top, obstacle_bottom
                 sys.exit()
 
             if event.type == SPAWN_TIME:
-                obstacle_top.append(get_top_obstacle())
-                obstacle_bottom.append(get_bottom_obstacle())
+                obstacle_lst.extend(get_obstacles(TOP_OBS1(), BOTTOM_OBS1()))
 
         # Get all the keys currently pressed.
 
@@ -353,16 +361,9 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_top, obstacle_bottom
         bg_x_position = move_bg(bg_x_position)
         sand_x_position = move_sand(sand_x_position)
 
-        # Top Obstacles
-        obstacle_top = move_top_obstacles(obstacle_top)
-        draw_top_obstacle(obstacle_top)
-
-        # Bottom Obstacles
-        obstacle_bottom = move_bottom_obstacles(obstacle_bottom)
-        draw_bottom_obstacle(obstacle_bottom)
-
-
-
+        # Generate New Obstacles
+        obstacle_lst = move_obstacles(obstacle_lst)
+        draw_obstacles(obstacle_lst, TOP_OBS1(), BOTTOM_OBS1())
 
         if game_active:
             # image of player
@@ -384,4 +385,4 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_top, obstacle_bottom
 
 
 if __name__ == '__main__':
-    main_game_loop(bg_x_position,sand_x_position, obstacle_top, obstacle_bottom)
+    main_game_loop(bg_x_position,sand_x_position, obstacle_lst)
