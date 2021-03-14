@@ -164,6 +164,10 @@ bg_1 = pygame.image.load('./assets/bg-1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
 bg_x_position = 0
 
+# ====== OBSTACLES =====================================================================================================
+SPAWN_TIME = pygame.USEREVENT
+pygame.time.set_timer(SPAWN_TIME, 2500)
+
 # TOP Obstacles
 iceberg_1 = pygame.image.load('./assets/iceberg_1.png')
 iceberg_1 = pygame.transform.scale(iceberg_1, (80, 250))
@@ -171,9 +175,18 @@ iceberg_2 = pygame.image.load('./assets/iceberg_2.png')
 iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
 
 obstacle_top = []
-SPAWN_TOP = pygame.USEREVENT
-pygame.time.set_timer(SPAWN_TOP, 2500)
 OBSTACLE_HEIGHTS_TOP = [-25, -50, -100, -150]
+
+# BOTTOM Obstacles
+
+seaweed_1 = pygame.image.load('./assets/seaweed1.png')
+seaweed_1 = pygame.transform.scale(seaweed_1, (80, 250))
+
+seaweed_2 = pygame.image.load('./assets/seaweed2.png')
+seaweed_2 = pygame.transform.scale(seaweed_2, (80, 250))
+
+obstacle_bottom = []
+OBSTACLE_HEIGHTS_BOTTOM = [550, 600, 650, 700]
 
 
 # Game Functions
@@ -251,6 +264,8 @@ def move_bg(bg_position):
     else:
         return bg_position
 
+# Top Obstacle
+
 
 def get_top_obstacle():
     iceberg_rect = cycle([iceberg_1, iceberg_2])
@@ -269,6 +284,28 @@ def draw_top_obstacle(obstacles):
     iceberg_draw = cycle([iceberg_1, iceberg_2])
     for obstacle in obstacles:
         next_draw = next(iceberg_draw)
+        screen.blit(next_draw, obstacle)
+
+
+# Bottom obstacles
+
+def get_bottom_obstacle():
+    seaweed_rect = cycle([seaweed_1, seaweed_2])
+    next_obstacle = next(seaweed_rect)
+    new_obstacle = next_obstacle.get_rect(midbottom=(700, random.choice(OBSTACLE_HEIGHTS_BOTTOM)))
+    return new_obstacle
+
+
+def move_bottom_obstacles(obstacles):
+    for obstacle in obstacles:
+        obstacle.centerx -= 10
+    return obstacles
+
+
+def draw_bottom_obstacle(obstacles):
+    seaweed_draw = cycle([seaweed_1, seaweed_2])
+    for obstacle in obstacles:
+        next_draw = next(seaweed_draw)
         screen.blit(next_draw, obstacle)
 
 
@@ -315,8 +352,10 @@ while game_running:
         if event.type == pygame.KEYDOWN:  # Move Namu with space bar
             if event.type == pygame.K_SPACE:
                 pass
-        if event.type == SPAWN_TOP:
+        if event.type == SPAWN_TIME:
             obstacle_top.append(get_top_obstacle())
+            obstacle_bottom.append(get_bottom_obstacle())
+            print(obstacle_bottom)
 
     # Get all the keys currently pressed.
     pressed_keys = pygame.key.get_pressed()
@@ -331,6 +370,12 @@ while game_running:
     # Top Obstacles
     obstacle_top = move_top_obstacles(obstacle_top)
     draw_top_obstacle(obstacle_top)
+
+    # Bottom Obstacles
+    obstacle_bottom = move_bottom_obstacles(obstacle_bottom)
+    draw_bottom_obstacle(obstacle_bottom)
+
+
 
     if game_active:
         # image of player
@@ -388,15 +433,11 @@ pygame.quit()
         obstacle_top = move_top_obstacles(obstacle_top)
         draw_top_obstacle(obstacle_top)
 
-        # Total Obstacles
-        obstacles = []
-
         if game_active:
             # image of player
+
             moving_sprite.draw(screen)
             moving_sprite.update()
-            if check_collision(obstacles):
-                quiz()
 
             # Game Functions
             score_display('main_game')
