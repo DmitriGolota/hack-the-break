@@ -263,11 +263,25 @@ def trivia_display(trivia_questions, trivia_number):
     pause = True
 
     while pause:
-        print(current_trivia.key["question"])
-        trivia_print_options(current_trivia.key["options"])
-        if pygame.key.key_code(str(current_trivia.key["answer"])):
-            print("You're right!")
-            print(current_trivia.key["fact"])
+        for event in pygame.event.get():
+            print(current_trivia["question"])
+            trivia_print_options(current_trivia["options"])
+            if event.type == KEYDOWN and pygame.key.key_code(str(current_trivia["answer"])):
+                print("You're right!")
+
+            if event.type == KEYDOWN:
+                print("You're Wrong.")
+
+        pause = False
+
+    time.sleep(2)
+
+    print(current_trivia["fact"])
+
+    time.sleep(20)
+
+
+
 
 # Game Functions
 
@@ -452,12 +466,14 @@ def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_active = True
     game_running = True
     loop_times = 1
+    trivia_num = 0
 
     while game_running:
         pygame.time.delay(100)
 
         if loop_times % 80 == 0:
-            print("Trivia Time")
+            trivia_display(TRIVIA_Qs(), trivia_num)
+            trivia_num += 1
         else:
             for event in pygame.event.get():  # catch all the events that are happening right now
                 if event.type == KEYDOWN:
