@@ -29,6 +29,8 @@ pygame.mixer.init()
 pygame.display.set_caption("Namu")
 
 WINDOW_SIZE = (500, 500)
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 500
 display = pygame.Surface((500, 500))
 screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
 clock = pygame.time.Clock()
@@ -80,6 +82,16 @@ class Namu(pygame.sprite.Sprite):
             self.rect.move_ip(-5, 0)
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
+
+        # Keep player on the screen
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= SCREEN_HEIGHT:
+            self.rect.bottom = SCREEN_HEIGHT
 
 
 class NamuMamu(pygame.sprite.Sprite):
@@ -160,7 +172,7 @@ sand_surface = pygame.transform.scale(sand_surface, (512, 56))
 sand_x_position = 0
 
 # Background_Image
-bg_1 = pygame.image.load('./assets/bg-1.png').convert()
+bg_1 = pygame.image.load('./assets/bg_1.png').convert()
 bg_1 = pygame.transform.scale(bg_1, (512, 512))
 
 
@@ -318,16 +330,6 @@ def check_collision(obstacles):
     return True
 
 
-def quiz():
-    quiz_menu = pygame_menu.Menu(
-        height=WINDOW_SIZE[1] * 0.5,
-        width=WINDOW_SIZE[0] * 0.5,
-        title="Quiz Time!"
-    )
-    quiz_menu.add_button("hello", print_yo)
-    quiz_menu.add_button("hi", print_yo)
-
-
 def print_yo():
     print("yo")
 
@@ -392,18 +394,3 @@ while game_running:
     clock.tick(120)
 
 pygame.quit()
-
-
-        # game over
-        else:
-            score_display('game_over')
-            time.sleep(5)
-
-        pygame.display.update()
-        clock.tick(120)
-
-    pygame.quit()"""
-
-
-"""if __name__ == '__main__':
-    menu()"""
