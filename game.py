@@ -37,6 +37,7 @@ music = ["./assets/sounds/NAMU-1.mp3","./assets/sounds/NAMU-2.mp3","./assets/sou
 pygame.mixer.music.load(music[random.randint(0, 2)])
 pygame.mixer.music.play(loops=-1)
 
+
 # Game Classes
 
 class Namu(pygame.sprite.Sprite):
@@ -191,11 +192,13 @@ bg_2 = scale_bg(pygame.image.load('./assets/bg_2.png').convert())
 backgrounds = [bg_1, bg1_to_bg2, bg_2]
 backgrounds = [pygame.transform.scale(background, (512, 512)) for background in backgrounds]
 
+main_bg = pygame.image.load("./assets/namu_logo.png")
+main_bg = pygame.transform.scale(main_bg, (512, 512))
+
 
 bg_x_position = 0
 
 # ====== OBSTACLES =====================================================================================================
-
 SPAWN_TIME = pygame.USEREVENT
 pygame.time.set_timer(SPAWN_TIME, 2000)
 
@@ -362,7 +365,7 @@ def draw_obstacles(obstacles_lst, top_obs_collection, bottom_obs_collection):
 # ====================== Collision Functions ===========================================================================
 
 
-def check_collision(obstacles):
+def check_collision(obstacles, moving_sprite):
     for obstacle in obstacles:
         if moving_sprite.colliderect(obstacle):
             return False
