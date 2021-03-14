@@ -365,9 +365,9 @@ def draw_obstacles(obstacles_lst, top_obs_collection, bottom_obs_collection):
 # ====================== Collision Functions ===========================================================================
 
 
-def check_collision(obstacles, moving_sprite):
+def check_collision(obstacles):
     for obstacle in obstacles:
-        if moving_sprite.colliderect(obstacle):
+        if obstacle.colliderect(moving_sprite):
             return False
     return True
 
