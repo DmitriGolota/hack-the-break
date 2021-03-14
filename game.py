@@ -9,7 +9,6 @@ Member List
 Mar 13, 2021
 """
 
-
 import pygame
 import pygame_menu
 import sys
@@ -18,7 +17,6 @@ from pygame_functions import *
 from pygame.locals import *
 import time
 from itertools import cycle
-
 
 from pygame.locals import (
     K_UP,
@@ -41,6 +39,7 @@ clock = pygame.time.Clock()
 
 pygame.mixer.music.load("./assets/sounds/NAMU-1.mp3")
 pygame.mixer.music.play(loops=-1)
+
 
 # Game Classes
 
@@ -66,7 +65,6 @@ class Namu(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.rect.topleft = [pos_x, pos_y]
-
 
     def update(self):
         if self.is_animating:
@@ -126,13 +124,11 @@ class NamuMamu(pygame.sprite.Sprite):
         self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f31.png"))
         self.sprites.append(pygame.image.load("./assets/NamuMamuAnim/Namu-Mamu-f32.png"))
 
-
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
         self.rect = self.image.get_rect()
         self.rect.bottomright = [pos_x, pos_y]
-
 
     def update(self):
         if self.is_animating:
@@ -237,16 +233,13 @@ moving_sprite.add(player)
 final_check = NamuMamu(600, 500)
 moving_sprite.add(final_check)
 
- # Namu class test
-
+# Namu class test
 
 
 # Game Variables
 game_font = pygame.font.Font('./assets/Fipps_font.otf', 14)
 score = 0
 high_score = 0
-
-
 
 # Floor_Sand
 sand_surface = pygame.image.load('./assets/new_sand.png').convert()
@@ -263,8 +256,6 @@ iceberg_1 = pygame.image.load('./assets/iceberg_1.png')
 iceberg_1 = pygame.transform.scale(iceberg_1, (80, 250))
 iceberg_2 = pygame.image.load('./assets/iceberg_2.png')
 iceberg_2 = pygame.transform.scale(iceberg_2, (80, 250))
-
-
 
 obstacle_top = []
 SPAWN_TOP = pygame.USEREVENT
@@ -301,7 +292,7 @@ def generate_random_question():
             are in the ocean since the majority of it has yet to be observed. They \
             estimate that there are roughly 91% of species remain undiscovered in \
             the ecosystem; there can be millions of species!"
-            ]
+             ]
     }
     question_for_this_turn = random.choice(questions_to_be_asked.keys())
     return question_for_this_turn, questions_to_be_asked[question_for_this_turn]
@@ -367,6 +358,7 @@ def draw_top_obstacle(obstacles):
         next_draw = next(iceberg_draw)
         screen.blit(next_draw, obstacle)
 
+
 # Menu Init
 
 menu = pygame_menu.Menu(
@@ -376,8 +368,12 @@ menu = pygame_menu.Menu(
     width=400
 )
 
+game_mode = False
+
+
 def start_the_game():
-    pass
+    return game_mode == True
+
 
 user_name = menu.add_text_input('Name: ', default='John Doe', maxchar=10)
 menu.add_button('Play', start_the_game)
@@ -385,63 +381,76 @@ menu.add_button('Quit', pygame_menu.events.EXIT)
 
 menu.mainloop(screen)
 
+
 # Main Loop
+def game_run():
+    game_active = True
+    game_running = True
 
-game_active = True
-game_running = True
+    while game_running:
+        pygame.time.delay(100)
 
-while game_running:
-    pygame.time.delay(100)
+        for event in pygame.event.get():  # catch all the events that are happening right now
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    game_running = False
 
-    for event in pygame.event.get():      # catch all the events that are happening right now
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                game_running = False
+            if event.type == pygame.QUIT:  # Quitting the game
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:  # Move Namu with space bar
+                if event.type == pygame.K_SPACE:
+                    pass
+            if event.type == SPAWN_TOP:
+                obstacle_top.append(get_top_obstacle())
 
-        if event.type == pygame.QUIT: # Quitting the game
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.KEYDOWN: # Move Namu with space bar
-            if event.type == pygame.K_SPACE:
-                pass
-        if event.type == SPAWN_TOP:
-            obstacle_top.append(get_top_obstacle())
+        # Get all the keys currently pressed.
+        pressed_keys = pygame.key.get_pressed()
 
-    # Get all the keys currently pressed.
-    pressed_keys = pygame.key.get_pressed()
+        # Update the layer sprite based on user keypresses.
+        player.update()
 
-    # Update the layer sprite based on user keypresses.
-    player.update()
+        # Background
+        bg_x_position = move_bg(bg_x_position)
+        sand_x_position = move_sand(sand_x_position)
 
+        # Top Obstacles
+        obstacle_top = move_top_obstacles(obstacle_top)
+        draw_top_obstacle(obstacle_top)
 
-    # Background
-    bg_x_position = move_bg(bg_x_position)
-    sand_x_position = move_sand(sand_x_position)
+        if game_active:
+            # image of player
 
-    # Top Obstacles
-    obstacle_top = move_top_obstacles(obstacle_top)
-    draw_top_obstacle(obstacle_top)
+            moving_sprite.draw(screen)
+            moving_sprite.update()
 
+            # Game Functions
+            score_display('main_game')
 
-    if game_active:
-        # image of player
+        # game over
+        else:
+            score_display('game_over')
+            time.sleep(5)
 
-        moving_sprite.draw(screen)
-        moving_sprite.update()
+        pygame.display.update()
+        clock.tick(120)
 
-
-        # Game Functions
-        score_display('main_game')
-
-    # game over
-    else:
-        score_display('game_over')
-        time.sleep(5)
-
-    pygame.display.update()
-    clock.tick(120)
-
+    pygame.quit()
 
 
+def game():
+    game_mode = False
 
-pygame.quit()
+    def start_the_game():
+        return game_mode == True
+
+    user_name = menu.add_text_input('Name: ', default='John Doe', maxchar=10)
+    menu.add_button('Play', start_the_game)
+    menu.add_button('Quit', pygame_menu.events.EXIT)
+
+    menu.mainloop(screen)
+    if game_mode == True:
+        game_run()
+
+if __name__ == '__main__':
+    game()
