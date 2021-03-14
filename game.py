@@ -235,8 +235,8 @@ def START_TRIVIA_Q():
 def TRIVIA_Qs():
     questions = [{"question": "How many different species of fish exist in the Ocean?",
                   "options": ["15_000", "32_000", "40_000", "23_000"],
-                  "answer": 2, "fact": "32 000! This is greater than the total of all other "
-                                       "vertebrate species (amphibians, reptiles, birds, and mammals) combined."},
+                  "answer": "K_2", "fact": "32 000! This is greater than the total of all other "
+                                           "vertebrate species (amphibians, reptiles, birds, and mammals) combined."},
                  {"question": "The Ocean contributes to: ",
                   "options": ["Producing Oxygen and storing Carbon Dioxide",
                               "Regulating weather and climate",
@@ -265,7 +265,9 @@ def trivia_display(trivia_questions, trivia_number):
     while pause:
         print(current_trivia.key["question"])
         trivia_print_options(current_trivia.key["options"])
-        pass
+        if pygame.key.key_code(str(current_trivia.key["answer"])):
+            print("You're right!")
+            print(current_trivia.key["fact"])
 
 # Game Functions
 
@@ -449,23 +451,26 @@ def main_game_tester():
 def main_game_loop(bg_x_position, sand_x_position, obstacle_lst):
     game_active = True
     game_running = True
-    loop_times = 0
+    loop_times = 1
 
     while game_running:
         pygame.time.delay(100)
 
-        for event in pygame.event.get():  # catch all the events that are happening right now
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    game_running = False
+        if loop_times % 80 == 0:
+            print("Trivia Time")
+        else:
+            for event in pygame.event.get():  # catch all the events that are happening right now
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        game_running = False
 
-            if event.type == pygame.QUIT:  # Quitting the game
-                pygame.quit()
-                sys.exit()
+                if event.type == pygame.QUIT:  # Quitting the game
+                    pygame.quit()
+                    sys.exit()
 
-            if event.type == SPAWN_TIME:
-                obstacle_lst.extend(get_obstacles(TOP_OBS1(), BOTTOM_OBS1()))
-                print("It's Obstacle Time")
+                if event.type == SPAWN_TIME:
+                    obstacle_lst.extend(get_obstacles(TOP_OBS1(), BOTTOM_OBS1()))
+                    print("It's Obstacle Time")
 
         # Get all the keys currently pressed.
 
